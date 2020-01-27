@@ -6,13 +6,13 @@
 Introduction
 ============
 
-"Copying bad design is not good design." -- Nim's inofficial motto
+"Copying bad design is not good design." -- Nim's unofficial motto
 
 
 Introduction
 ============
 
-"Copying bad design is not good design." -- Nim's inofficial motto
+"Copying bad design is not good design." -- Nim's unofficial motto
 
 - "Do not copy bad designs!"
 
@@ -20,7 +20,7 @@ Introduction
 Introduction
 ============
 
-"Copying bad design is not good design." -- Nim's inofficial motto
+"Copying bad design is not good design." -- Nim's unofficial motto
 
 - "Do not copy bad designs!"
 - "Recombine good bits from several sources!"

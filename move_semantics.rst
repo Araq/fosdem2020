@@ -441,8 +441,8 @@ Benchmark: Throughput
   mark&sweep GC                     17s              588.047MiB
   deferred refcounting GC           16s              304.074MiB
   Boehm GC                          12s              N/A
-  ARC                               **7.8s**         740.715MiB
-  manual memory management          6.75s            473.195MiB
+  ARC                               **6.75s**        472.098MiB
+  manual memory management          5.23s            244.563MiB
 ==============================      ==============   =============
 
 
@@ -664,8 +664,8 @@ Benchmark: Throughput
   mark&sweep GC                     17s              588.047MiB
   deferred refcounting GC           16s              304.074MiB
   Boehm GC                          12s              N/A
-  ARC                               7.8s             740.715MiB
-  manual memory management          6.75s            473.195MiB
+  ARC                               6.75s            472.098MiB
+  manual memory management          5.23s            244.563MiB
   object pooling                    **2.4s**         251.504MiB
 ==============================      ==============   =============
 

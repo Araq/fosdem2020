@@ -3,6 +3,8 @@ include prelude
 
 type
   Node = ptr object
+    when defined(withRc):
+      rc: int
     le, ri: Node
 
 proc checkTree(n: Node): int =
@@ -11,6 +13,8 @@ proc checkTree(n: Node): int =
 
 proc makeTree(depth: int): Node =
   result = cast[Node](alloc(sizeof(result[])))
+  when defined(withRc):
+    result.rc = 0
   if depth == 0:
     result.le = nil
     result.ri = nil

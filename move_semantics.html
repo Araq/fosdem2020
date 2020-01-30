@@ -256,17 +256,17 @@ p.pic {
 
 </div>
 <div class="slide">
-<h1 id="introduction">Introduction</h1><p>&quot;Copying bad design is not good design.&quot; -- Nim's inofficial motto</p>
+<h1 id="introduction">Introduction</h1><p>&quot;Copying bad design is not good design.&quot; -- Nim's unofficial motto</p>
 
 </div>
 <div class="slide">
-<h1 id="introduction">Introduction</h1><p>&quot;Copying bad design is not good design.&quot; -- Nim's inofficial motto</p>
+<h1 id="introduction">Introduction</h1><p>&quot;Copying bad design is not good design.&quot; -- Nim's unofficial motto</p>
 <ul class="simple"><li>&quot;Do not copy bad designs!&quot;</li>
 </ul>
 
 </div>
 <div class="slide">
-<h1 id="introduction">Introduction</h1><p>&quot;Copying bad design is not good design.&quot; -- Nim's inofficial motto</p>
+<h1 id="introduction">Introduction</h1><p>&quot;Copying bad design is not good design.&quot; -- Nim's unofficial motto</p>
 <ul class="simple"><li>&quot;Do not copy bad designs!&quot;</li>
 <li>&quot;Recombine good bits from several sources!&quot;</li>
 </ul>
@@ -349,22 +349,16 @@ Data: -----------+
 <div class="slide">
 <h1 id="implicit-move-2">Implicit move (2)</h1><table class="line-nums-table"><tbody><tr><td class="blob-line-nums"><pre class="line-nums">1
 2
-</pre></td><td><pre id="listing_6" class="listing"><span class="Keyword">var</span> <span class="Identifier">a</span> <span class="Operator">=</span> <span class="Identifier">f</span><span class="Punctuation">(</span><span class="Identifier">g</span><span class="Punctuation">(</span><span class="Punctuation">)</span><span class="Punctuation">)</span> <span class="Comment"># can move g's result into 'f'</span>
+3
+</pre></td><td><pre id="listing_6" class="listing"><span class="Keyword">var</span> <span class="Identifier">namedValue</span> <span class="Operator">=</span> <span class="Identifier">g</span><span class="Punctuation">(</span><span class="Punctuation">)</span>
+<span class="Keyword">var</span> <span class="Identifier">a</span> <span class="Operator">=</span> <span class="Identifier">f</span><span class="Punctuation">(</span><span class="Identifier">namedValue</span><span class="Punctuation">)</span> <span class="Comment"># can move namedValue into 'f'</span>
 <span class="Comment"># can move f's result into a</span></pre></td></tr></tbody></table>
 </div>
 <div class="slide">
 <h1 id="implicit-move-3">Implicit move (3)</h1><table class="line-nums-table"><tbody><tr><td class="blob-line-nums"><pre class="line-nums">1
 2
 3
-</pre></td><td><pre id="listing_7" class="listing"><span class="Keyword">var</span> <span class="Identifier">namedValue</span> <span class="Operator">=</span> <span class="Identifier">g</span><span class="Punctuation">(</span><span class="Punctuation">)</span>
-<span class="Keyword">var</span> <span class="Identifier">a</span> <span class="Operator">=</span> <span class="Identifier">f</span><span class="Punctuation">(</span><span class="Identifier">namedValue</span><span class="Punctuation">)</span> <span class="Comment"># can move namedValue into 'f'</span>
-<span class="Comment"># can move f's result into a</span></pre></td></tr></tbody></table>
-</div>
-<div class="slide">
-<h1 id="implicit-move-4">Implicit move (4)</h1><table class="line-nums-table"><tbody><tr><td class="blob-line-nums"><pre class="line-nums">1
-2
-3
-</pre></td><td><pre id="listing_8" class="listing"><span class="Keyword">var</span> <span class="Identifier">x</span> <span class="Operator">=</span> <span class="Operator">@</span><span class="Punctuation">[</span><span class="DecNumber">1</span><span class="Punctuation">,</span> <span class="DecNumber">2</span><span class="Punctuation">,</span> <span class="DecNumber">3</span><span class="Punctuation">]</span>
+</pre></td><td><pre id="listing_7" class="listing"><span class="Keyword">var</span> <span class="Identifier">x</span> <span class="Operator">=</span> <span class="Operator">@</span><span class="Punctuation">[</span><span class="DecNumber">1</span><span class="Punctuation">,</span> <span class="DecNumber">2</span><span class="Punctuation">,</span> <span class="DecNumber">3</span><span class="Punctuation">]</span>
 <span class="Keyword">var</span> <span class="Identifier">y</span> <span class="Operator">=</span> <span class="Identifier">x</span> <span class="Comment"># is last read of 'x', can move into 'y'</span>
 <span class="Keyword">var</span> <span class="Identifier">z</span> <span class="Operator">=</span> <span class="Identifier">y</span> <span class="Comment"># is last read of 'y', can move into 'z'</span></pre></td></tr></tbody></table>
 </div>
@@ -375,7 +369,7 @@ Data: -----------+
 4
 5
 6
-</pre></td><td><pre id="listing_9" class="listing"><span class="Keyword">func</span> <span class="Identifier">put</span><span class="Punctuation">(</span><span class="Identifier">t</span><span class="Punctuation">:</span> <span class="Keyword">var</span> <span class="Identifier">Table</span><span class="Punctuation">;</span> <span class="Identifier">key</span><span class="Punctuation">:</span> <span class="Identifier">string</span><span class="Punctuation">;</span> <span class="Identifier">value</span><span class="Punctuation">:</span> <span class="Identifier">seq</span><span class="Punctuation">[</span><span class="Identifier">string</span><span class="Punctuation">]</span><span class="Punctuation">)</span> <span class="Operator">=</span>
+</pre></td><td><pre id="listing_8" class="listing"><span class="Keyword">func</span> <span class="Identifier">put</span><span class="Punctuation">(</span><span class="Identifier">t</span><span class="Punctuation">:</span> <span class="Keyword">var</span> <span class="Identifier">Table</span><span class="Punctuation">;</span> <span class="Identifier">key</span><span class="Punctuation">:</span> <span class="Identifier">string</span><span class="Punctuation">;</span> <span class="Identifier">value</span><span class="Punctuation">:</span> <span class="Identifier">seq</span><span class="Punctuation">[</span><span class="Identifier">string</span><span class="Punctuation">]</span><span class="Punctuation">)</span> <span class="Operator">=</span>
   <span class="Keyword">var</span> <span class="Identifier">h</span> <span class="Operator">=</span> <span class="Identifier">hash</span><span class="Punctuation">(</span><span class="Identifier">key</span><span class="Punctuation">)</span>
   <span class="Identifier">t</span><span class="Operator">.</span><span class="Identifier">slots</span><span class="Punctuation">[</span><span class="Identifier">h</span><span class="Punctuation">]</span> <span class="Operator">=</span> <span class="Identifier">value</span> <span class="Comment"># copy here :-(</span>
 
@@ -389,7 +383,7 @@ Data: -----------+
 4
 5
 6
-</pre></td><td><pre id="listing_10" class="listing"><span class="Keyword">func</span> <span class="Identifier">put</span><span class="Punctuation">(</span><span class="Identifier">t</span><span class="Punctuation">:</span> <span class="Keyword">var</span> <span class="Identifier">Table</span><span class="Punctuation">;</span> <span class="Identifier">key</span><span class="Punctuation">:</span> <span class="Identifier">string</span><span class="Punctuation">;</span> <span class="Identifier">value</span><span class="Punctuation">:</span> <span style="background-color:#FF7700"><span class="Identifier">sink</span></span> <span class="Identifier">seq</span><span class="Punctuation">[</span><span class="Identifier">string</span><span class="Punctuation">]</span><span class="Punctuation">)</span> <span class="Operator">=</span>
+</pre></td><td><pre id="listing_9" class="listing"><span class="Keyword">func</span> <span class="Identifier">put</span><span class="Punctuation">(</span><span class="Identifier">t</span><span class="Punctuation">:</span> <span class="Keyword">var</span> <span class="Identifier">Table</span><span class="Punctuation">;</span> <span class="Identifier">key</span><span class="Punctuation">:</span> <span class="Identifier">string</span><span class="Punctuation">;</span> <span class="Identifier">value</span><span class="Punctuation">:</span> <span style="background-color:#FF7700"><span class="Identifier">sink</span></span> <span class="Identifier">seq</span><span class="Punctuation">[</span><span class="Identifier">string</span><span class="Punctuation">]</span><span class="Punctuation">)</span> <span class="Operator">=</span>
   <span class="Keyword">var</span> <span class="Identifier">h</span> <span class="Operator">=</span> <span class="Identifier">hash</span><span class="Punctuation">(</span><span class="Identifier">key</span><span class="Punctuation">)</span>
   <span class="Identifier">t</span><span class="Operator">.</span><span class="Identifier">slots</span><span class="Punctuation">[</span><span class="Identifier">h</span><span class="Punctuation">]</span> <span class="Operator">=</span> <span class="Identifier">value</span> <span class="Comment"># move here :-)</span>
 
@@ -404,7 +398,7 @@ Data: -----------+
 5
 6
 7
-</pre></td><td><pre id="listing_11" class="listing"><span class="Keyword">func</span> <span class="Identifier">put</span><span class="Punctuation">(</span><span class="Identifier">t</span><span class="Punctuation">:</span> <span class="Keyword">var</span> <span class="Identifier">Table</span><span class="Punctuation">;</span> <span class="Identifier">key</span><span class="Punctuation">:</span> <span class="Identifier">string</span><span class="Punctuation">;</span> <span class="Identifier">value</span><span class="Punctuation">:</span> <span style="background-color:#FF7700"><span class="Identifier">sink</span></span> <span class="Identifier">seq</span><span class="Punctuation">[</span><span class="Identifier">string</span><span class="Punctuation">]</span><span class="Punctuation">)</span> <span class="Operator">=</span>
+</pre></td><td><pre id="listing_10" class="listing"><span class="Keyword">func</span> <span class="Identifier">put</span><span class="Punctuation">(</span><span class="Identifier">t</span><span class="Punctuation">:</span> <span class="Keyword">var</span> <span class="Identifier">Table</span><span class="Punctuation">;</span> <span class="Identifier">key</span><span class="Punctuation">:</span> <span class="Identifier">string</span><span class="Punctuation">;</span> <span class="Identifier">value</span><span class="Punctuation">:</span> <span style="background-color:#FF7700"><span class="Identifier">sink</span></span> <span class="Identifier">seq</span><span class="Punctuation">[</span><span class="Identifier">string</span><span class="Punctuation">]</span><span class="Punctuation">)</span> <span class="Operator">=</span>
   <span class="Keyword">var</span> <span class="Identifier">h</span> <span class="Operator">=</span> <span class="Identifier">hash</span><span class="Punctuation">(</span><span class="Identifier">key</span><span class="Punctuation">)</span>
   <span class="Identifier">t</span><span class="Operator">.</span><span class="Identifier">slots</span><span class="Punctuation">[</span><span class="Identifier">h</span><span class="Punctuation">]</span> <span class="Operator">=</span> <span class="Identifier">value</span> <span class="Comment"># move here :-)</span>
 
@@ -422,7 +416,7 @@ Data: -----------+
 5
 6
 7
-</pre></td><td><pre id="listing_12" class="listing"><span class="Keyword">func</span> <span class="Identifier">put</span><span class="Punctuation">(</span><span class="Identifier">t</span><span class="Punctuation">:</span> <span class="Keyword">var</span> <span class="Identifier">Table</span><span class="Punctuation">;</span> <span class="Identifier">key</span><span class="Punctuation">:</span> <span class="Identifier">string</span><span class="Punctuation">;</span> <span class="Identifier">value</span><span class="Punctuation">:</span> <span style="background-color:#FF7700"><span class="Identifier">sink</span></span> <span class="Identifier">seq</span><span class="Punctuation">[</span><span class="Identifier">string</span><span class="Punctuation">]</span><span class="Punctuation">)</span> <span class="Operator">=</span>
+</pre></td><td><pre id="listing_11" class="listing"><span class="Keyword">func</span> <span class="Identifier">put</span><span class="Punctuation">(</span><span class="Identifier">t</span><span class="Punctuation">:</span> <span class="Keyword">var</span> <span class="Identifier">Table</span><span class="Punctuation">;</span> <span class="Identifier">key</span><span class="Punctuation">:</span> <span class="Identifier">string</span><span class="Punctuation">;</span> <span class="Identifier">value</span><span class="Punctuation">:</span> <span style="background-color:#FF7700"><span class="Identifier">sink</span></span> <span class="Identifier">seq</span><span class="Punctuation">[</span><span class="Identifier">string</span><span class="Punctuation">]</span><span class="Punctuation">)</span> <span class="Operator">=</span>
   <span class="Keyword">var</span> <span class="Identifier">h</span> <span class="Operator">=</span> <span class="Identifier">hash</span><span class="Punctuation">(</span><span class="Identifier">key</span><span class="Punctuation">)</span>
   <span class="Identifier">t</span><span class="Operator">.</span><span class="Identifier">slots</span><span class="Punctuation">[</span><span class="Identifier">h</span><span class="Punctuation">]</span> <span class="Operator">=</span> <span class="Identifier">value</span> <span class="Comment"># move here :-)</span>
 
@@ -443,7 +437,7 @@ Data: -----------+
 5
 6
 7
-</pre></td><td><pre id="listing_13" class="listing"><span class="Keyword">func</span> <span class="Punctuation">`</span><span class="Punctuation">[</span><span class="Punctuation">]</span><span class="Operator">=</span><span class="Punctuation">`</span><span class="Punctuation">[</span><span class="Identifier">K</span><span class="Punctuation">,</span> <span class="Identifier">V</span><span class="Punctuation">]</span><span class="Punctuation">(</span><span class="Identifier">t</span><span class="Punctuation">:</span> <span class="Keyword">var</span> <span class="Identifier">Table</span><span class="Punctuation">[</span><span class="Identifier">K</span><span class="Punctuation">,</span> <span class="Identifier">V</span><span class="Punctuation">]</span><span class="Punctuation">;</span> <span class="Identifier">k</span><span class="Punctuation">:</span> <span class="Identifier">K</span><span class="Punctuation">;</span> <span class="Identifier">v</span><span class="Punctuation">:</span> <span class="Identifier">V</span><span class="Punctuation">)</span>
+</pre></td><td><pre id="listing_12" class="listing"><span class="Keyword">func</span> <span class="Punctuation">`</span><span class="Punctuation">[</span><span class="Punctuation">]</span><span class="Operator">=</span><span class="Punctuation">`</span><span class="Punctuation">[</span><span class="Identifier">K</span><span class="Punctuation">,</span> <span class="Identifier">V</span><span class="Punctuation">]</span><span class="Punctuation">(</span><span class="Identifier">t</span><span class="Punctuation">:</span> <span class="Keyword">var</span> <span class="Identifier">Table</span><span class="Punctuation">[</span><span class="Identifier">K</span><span class="Punctuation">,</span> <span class="Identifier">V</span><span class="Punctuation">]</span><span class="Punctuation">;</span> <span class="Identifier">k</span><span class="Punctuation">:</span> <span class="Identifier">K</span><span class="Punctuation">;</span> <span class="Identifier">v</span><span class="Punctuation">:</span> <span class="Identifier">V</span><span class="Punctuation">)</span>
 
 <span class="Keyword">func</span> <span class="Punctuation">`</span><span class="Operator">==</span><span class="Punctuation">`</span><span class="Punctuation">[</span><span class="Identifier">T</span><span class="Punctuation">]</span><span class="Punctuation">(</span><span class="Identifier">a</span><span class="Punctuation">,</span> <span class="Identifier">b</span><span class="Punctuation">:</span> <span class="Identifier">T</span><span class="Punctuation">)</span><span class="Punctuation">:</span> <span class="Identifier">bool</span>
 
@@ -462,7 +456,7 @@ Data: -----------+
 5
 6
 7
-</pre></td><td><pre id="listing_14" class="listing"><span class="Keyword">func</span> <span class="Punctuation">`</span><span class="Punctuation">[</span><span class="Punctuation">]</span><span class="Operator">=</span><span class="Punctuation">`</span><span class="Punctuation">[</span><span class="Identifier">K</span><span class="Punctuation">,</span> <span class="Identifier">V</span><span class="Punctuation">]</span><span class="Punctuation">(</span><span class="Identifier">t</span><span class="Punctuation">:</span> <span class="Keyword">var</span> <span class="Identifier">Table</span><span class="Punctuation">[</span><span class="Identifier">K</span><span class="Punctuation">,</span> <span class="Identifier">V</span><span class="Punctuation">]</span><span class="Punctuation">;</span> <span class="Identifier">k</span><span class="Punctuation">:</span> <span style="background-color:#FF7700"><span class="Identifier">sink</span></span> <span class="Identifier">K</span><span class="Punctuation">;</span> <span class="Identifier">v</span><span class="Punctuation">:</span> <span style="background-color:#FF7700"><span class="Identifier">sink</span></span> <span class="Identifier">V</span><span class="Punctuation">)</span>
+</pre></td><td><pre id="listing_13" class="listing"><span class="Keyword">func</span> <span class="Punctuation">`</span><span class="Punctuation">[</span><span class="Punctuation">]</span><span class="Operator">=</span><span class="Punctuation">`</span><span class="Punctuation">[</span><span class="Identifier">K</span><span class="Punctuation">,</span> <span class="Identifier">V</span><span class="Punctuation">]</span><span class="Punctuation">(</span><span class="Identifier">t</span><span class="Punctuation">:</span> <span class="Keyword">var</span> <span class="Identifier">Table</span><span class="Punctuation">[</span><span class="Identifier">K</span><span class="Punctuation">,</span> <span class="Identifier">V</span><span class="Punctuation">]</span><span class="Punctuation">;</span> <span class="Identifier">k</span><span class="Punctuation">:</span> <span style="background-color:#FF7700"><span class="Identifier">sink</span></span> <span class="Identifier">K</span><span class="Punctuation">;</span> <span class="Identifier">v</span><span class="Punctuation">:</span> <span style="background-color:#FF7700"><span class="Identifier">sink</span></span> <span class="Identifier">V</span><span class="Punctuation">)</span>
 
 <span class="Keyword">func</span> <span class="Punctuation">`</span><span class="Operator">==</span><span class="Punctuation">`</span><span class="Punctuation">[</span><span class="Identifier">T</span><span class="Punctuation">]</span><span class="Punctuation">(</span><span class="Identifier">a</span><span class="Punctuation">,</span> <span class="Identifier">b</span><span class="Punctuation">:</span> <span class="Identifier">T</span><span class="Punctuation">)</span><span class="Punctuation">:</span> <span class="Identifier">bool</span>
 
@@ -474,7 +468,7 @@ Data: -----------+
 <h1 id="getterscolon-lending-a-value">Getters: Lending a value</h1><table class="line-nums-table"><tbody><tr><td class="blob-line-nums"><pre class="line-nums">1
 2
 3
-</pre></td><td><pre id="listing_15" class="listing"><span class="Keyword">func</span> <span class="Identifier">get</span><span class="Punctuation">[</span><span class="Identifier">K</span><span class="Punctuation">,</span> <span class="Identifier">V</span><span class="Punctuation">]</span><span class="Punctuation">(</span><span class="Identifier">t</span><span class="Punctuation">:</span> <span class="Identifier">Table</span><span class="Punctuation">[</span><span class="Identifier">K</span><span class="Punctuation">,</span> <span class="Identifier">V</span><span class="Punctuation">]</span><span class="Punctuation">;</span> <span class="Identifier">key</span><span class="Punctuation">:</span> <span class="Identifier">K</span><span class="Punctuation">)</span><span class="Punctuation">:</span> <span class="Identifier">V</span> <span class="Operator">=</span>
+</pre></td><td><pre id="listing_14" class="listing"><span class="Keyword">func</span> <span class="Identifier">get</span><span class="Punctuation">[</span><span class="Identifier">K</span><span class="Punctuation">,</span> <span class="Identifier">V</span><span class="Punctuation">]</span><span class="Punctuation">(</span><span class="Identifier">t</span><span class="Punctuation">:</span> <span class="Identifier">Table</span><span class="Punctuation">[</span><span class="Identifier">K</span><span class="Punctuation">,</span> <span class="Identifier">V</span><span class="Punctuation">]</span><span class="Punctuation">;</span> <span class="Identifier">key</span><span class="Punctuation">:</span> <span class="Identifier">K</span><span class="Punctuation">)</span><span class="Punctuation">:</span> <span class="Identifier">V</span> <span class="Operator">=</span>
   <span class="Keyword">var</span> <span class="Identifier">h</span> <span class="Operator">=</span> <span class="Identifier">hash</span><span class="Punctuation">(</span><span class="Identifier">key</span><span class="Punctuation">)</span>
   <span class="Identifier">result</span> <span class="Operator">=</span> <span class="Identifier">t</span><span class="Operator">.</span><span class="Identifier">slots</span><span class="Punctuation">[</span><span class="Identifier">h</span><span class="Punctuation">]</span> <span class="Comment"># copy here?</span></pre></td></tr></tbody></table>
 </div>
@@ -482,7 +476,7 @@ Data: -----------+
 <h1 id="getterscolon-lending-a-value-2">Getters: Lending a value (2)</h1><table class="line-nums-table"><tbody><tr><td class="blob-line-nums"><pre class="line-nums">1
 2
 3
-</pre></td><td><pre id="listing_16" class="listing"><span class="Keyword">func</span> <span class="Identifier">get</span><span class="Punctuation">[</span><span class="Identifier">K</span><span class="Punctuation">,</span> <span class="Identifier">V</span><span class="Punctuation">]</span><span class="Punctuation">(</span><span class="Identifier">t</span><span class="Punctuation">:</span> <span class="Identifier">Table</span><span class="Punctuation">[</span><span class="Identifier">K</span><span class="Punctuation">,</span> <span class="Identifier">V</span><span class="Punctuation">]</span><span class="Punctuation">;</span> <span class="Identifier">key</span><span class="Punctuation">:</span> <span class="Identifier">K</span><span class="Punctuation">)</span><span class="Punctuation">:</span> <span class="Identifier">V</span> <span class="Operator">=</span>
+</pre></td><td><pre id="listing_15" class="listing"><span class="Keyword">func</span> <span class="Identifier">get</span><span class="Punctuation">[</span><span class="Identifier">K</span><span class="Punctuation">,</span> <span class="Identifier">V</span><span class="Punctuation">]</span><span class="Punctuation">(</span><span class="Identifier">t</span><span class="Punctuation">:</span> <span class="Identifier">Table</span><span class="Punctuation">[</span><span class="Identifier">K</span><span class="Punctuation">,</span> <span class="Identifier">V</span><span class="Punctuation">]</span><span class="Punctuation">;</span> <span class="Identifier">key</span><span class="Punctuation">:</span> <span class="Identifier">K</span><span class="Punctuation">)</span><span class="Punctuation">:</span> <span class="Identifier">V</span> <span class="Operator">=</span>
   <span class="Keyword">var</span> <span class="Identifier">h</span> <span class="Operator">=</span> <span class="Identifier">hash</span><span class="Punctuation">(</span><span class="Identifier">key</span><span class="Punctuation">)</span>
   <span class="Identifier">result</span> <span class="Operator">=</span> <span class="Identifier">move</span> <span class="Identifier">t</span><span class="Operator">.</span><span class="Identifier">slots</span><span class="Punctuation">[</span><span class="Identifier">h</span><span class="Punctuation">]</span> <span class="Comment"># does not compile</span></pre></td></tr></tbody></table>
 </div>
@@ -490,7 +484,7 @@ Data: -----------+
 <h1 id="getterscolon-lending-a-value-3">Getters: Lending a value (3)</h1><table class="line-nums-table"><tbody><tr><td class="blob-line-nums"><pre class="line-nums">1
 2
 3
-</pre></td><td><pre id="listing_17" class="listing"><span class="Keyword">func</span> <span class="Identifier">get</span><span class="Punctuation">[</span><span class="Identifier">K</span><span class="Punctuation">,</span> <span class="Identifier">V</span><span class="Punctuation">]</span><span class="Punctuation">(</span><span class="Identifier">t</span><span class="Punctuation">:</span> <span style="background-color:#FF7700"><span class="Keyword">var</span></span> <span class="Identifier">Table</span><span class="Punctuation">[</span><span class="Identifier">K</span><span class="Punctuation">,</span> <span class="Identifier">V</span><span class="Punctuation">]</span><span class="Punctuation">;</span> <span class="Identifier">key</span><span class="Punctuation">:</span> <span class="Identifier">K</span><span class="Punctuation">)</span><span class="Punctuation">:</span> <span class="Identifier">V</span> <span class="Operator">=</span>
+</pre></td><td><pre id="listing_16" class="listing"><span class="Keyword">func</span> <span class="Identifier">get</span><span class="Punctuation">[</span><span class="Identifier">K</span><span class="Punctuation">,</span> <span class="Identifier">V</span><span class="Punctuation">]</span><span class="Punctuation">(</span><span class="Identifier">t</span><span class="Punctuation">:</span> <span style="background-color:#FF7700"><span class="Keyword">var</span></span> <span class="Identifier">Table</span><span class="Punctuation">[</span><span class="Identifier">K</span><span class="Punctuation">,</span> <span class="Identifier">V</span><span class="Punctuation">]</span><span class="Punctuation">;</span> <span class="Identifier">key</span><span class="Punctuation">:</span> <span class="Identifier">K</span><span class="Punctuation">)</span><span class="Punctuation">:</span> <span class="Identifier">V</span> <span class="Operator">=</span>
   <span class="Keyword">var</span> <span class="Identifier">h</span> <span class="Operator">=</span> <span class="Identifier">hash</span><span class="Punctuation">(</span><span class="Identifier">key</span><span class="Punctuation">)</span>
   <span class="Identifier">result</span> <span class="Operator">=</span> <span class="Identifier">move</span> <span class="Identifier">t</span><span class="Operator">.</span><span class="Identifier">slots</span><span class="Punctuation">[</span><span class="Identifier">h</span><span class="Punctuation">]</span> <span class="Comment"># does compile, but it's a destructive read!</span></pre></td></tr></tbody></table>
 </div>
@@ -498,7 +492,7 @@ Data: -----------+
 <h1 id="getterscolon-lending-a-value-4">Getters: Lending a value (4)</h1><table class="line-nums-table"><tbody><tr><td class="blob-line-nums"><pre class="line-nums">1
 2
 3
-</pre></td><td><pre id="listing_18" class="listing"><span class="Keyword">func</span> <span class="Identifier">get</span><span class="Punctuation">[</span><span class="Identifier">K</span><span class="Punctuation">,</span> <span class="Identifier">V</span><span class="Punctuation">]</span><span class="Punctuation">(</span><span class="Identifier">t</span><span class="Punctuation">:</span> <span class="Identifier">Table</span><span class="Punctuation">[</span><span class="Identifier">K</span><span class="Punctuation">,</span> <span class="Identifier">V</span><span class="Punctuation">]</span><span class="Punctuation">;</span> <span class="Identifier">key</span><span class="Punctuation">:</span> <span class="Identifier">K</span><span class="Punctuation">)</span><span class="Punctuation">:</span> <span style="background-color:#FF7700"><span class="Identifier">lent</span></span> <span class="Identifier">V</span> <span class="Operator">=</span>
+</pre></td><td><pre id="listing_17" class="listing"><span class="Keyword">func</span> <span class="Identifier">get</span><span class="Punctuation">[</span><span class="Identifier">K</span><span class="Punctuation">,</span> <span class="Identifier">V</span><span class="Punctuation">]</span><span class="Punctuation">(</span><span class="Identifier">t</span><span class="Punctuation">:</span> <span class="Identifier">Table</span><span class="Punctuation">[</span><span class="Identifier">K</span><span class="Punctuation">,</span> <span class="Identifier">V</span><span class="Punctuation">]</span><span class="Punctuation">;</span> <span class="Identifier">key</span><span class="Punctuation">:</span> <span class="Identifier">K</span><span class="Punctuation">)</span><span class="Punctuation">:</span> <span style="background-color:#FF7700"><span class="Identifier">lent</span></span> <span class="Identifier">V</span> <span class="Operator">=</span>
   <span class="Keyword">var</span> <span class="Identifier">h</span> <span class="Operator">=</span> <span class="Identifier">hash</span><span class="Punctuation">(</span><span class="Identifier">key</span><span class="Punctuation">)</span>
   <span class="Identifier">result</span> <span class="Operator">=</span> <span class="Identifier">t</span><span class="Operator">.</span><span class="Identifier">slots</span><span class="Punctuation">[</span><span class="Identifier">h</span><span class="Punctuation">]</span> <span class="Comment"># &quot;borrow&quot;, no copy, no move.</span></pre></td></tr></tbody></table>
 </div>
@@ -525,7 +519,7 @@ Data: -----------+
 11
 12
 13
-</pre></td><td><pre id="listing_19" class="listing"><span class="Keyword">include</span> <span class="Identifier">prelude</span>
+</pre></td><td><pre id="listing_18" class="listing"><span class="Keyword">include</span> <span class="Identifier">prelude</span>
 
 <span class="Keyword">type</span>
   <span class="Identifier">Node</span> <span class="Operator">=</span> <span class="Keyword">ref</span> <span class="Keyword">object</span>
@@ -556,7 +550,7 @@ Data: -----------+
 14
 15
 16
-</pre></td><td><pre id="listing_20" class="listing"><span class="Keyword">proc</span> <span class="Identifier">main</span> <span class="Operator">=</span>
+</pre></td><td><pre id="listing_19" class="listing"><span class="Keyword">proc</span> <span class="Identifier">main</span> <span class="Operator">=</span>
   <span class="Keyword">let</span> <span class="Identifier">maxDepth</span> <span class="Operator">=</span> <span class="Identifier">parseInt</span><span class="Punctuation">(</span><span class="Identifier">paramStr</span><span class="Punctuation">(</span><span class="DecNumber">1</span><span class="Punctuation">)</span><span class="Punctuation">)</span>
   <span class="Keyword">const</span> <span class="Identifier">minDepth</span> <span class="Operator">=</span> <span class="DecNumber">4</span>
   <span class="Keyword">let</span> <span class="Identifier">stretchDepth</span> <span class="Operator">=</span> <span class="Identifier">maxDepth</span> <span class="Operator">+</span> <span class="DecNumber">1</span>
@@ -595,9 +589,7 @@ Data: -----------+
 19
 20
 21
-22
-23
-</pre></td><td><pre id="listing_21" class="listing"><span class="Keyword">include</span> <span class="Identifier">prelude</span>
+</pre></td><td><pre id="listing_20" class="listing"><span class="Keyword">include</span> <span class="Identifier">prelude</span>
 
 <span class="Keyword">type</span>
   <span class="Identifier">Node</span> <span class="Operator">=</span> <span class="Keyword">ptr</span> <span class="Keyword">object</span>
@@ -617,9 +609,7 @@ Data: -----------+
 
 <span class="Keyword">proc</span> <span class="Identifier">freeTree</span><span class="Punctuation">(</span><span class="Identifier">n</span><span class="Punctuation">:</span> <span class="Identifier">Node</span><span class="Punctuation">)</span> <span class="Operator">=</span>
   <span class="Keyword">if</span> <span class="Identifier">n</span> <span class="Operator">!=</span> <span class="Keyword">nil</span><span class="Punctuation">:</span>
-    <span class="Identifier">freeTree</span><span class="Punctuation">(</span><span class="Identifier">n</span><span class="Operator">.</span><span class="Identifier">le</span><span class="Punctuation">)</span>
-    <span class="Identifier">freeTree</span><span class="Punctuation">(</span><span class="Identifier">n</span><span class="Operator">.</span><span class="Identifier">ri</span><span class="Punctuation">)</span>
-    <span class="Identifier">dealloc</span><span class="Punctuation">(</span><span class="Identifier">n</span><span class="Punctuation">)</span></pre></td></tr></tbody></table>
+    <span class="Identifier">freeTree</span><span class="Punctuation">(</span><span class="Identifier">n</span><span class="Operator">.</span><span class="Identifier">le</span><span class="Punctuation">)</span><span class="Punctuation">;</span> <span class="Identifier">freeTree</span><span class="Punctuation">(</span><span class="Identifier">n</span><span class="Operator">.</span><span class="Identifier">ri</span><span class="Punctuation">)</span><span class="Punctuation">;</span> <span class="Identifier">dealloc</span><span class="Punctuation">(</span><span class="Identifier">n</span><span class="Punctuation">)</span></pre></td></tr></tbody></table>
 </div>
 <div class="slide">
 <h1 id="manual-memory-management-2">Manual memory management (2)</h1><table class="line-nums-table"><tbody><tr><td class="blob-line-nums"><pre class="line-nums">1
@@ -642,8 +632,7 @@ Data: -----------+
 18
 19
 20
-21
-</pre></td><td><pre id="listing_22" class="listing"><span class="Keyword">proc</span> <span class="Identifier">main</span> <span class="Operator">=</span>
+</pre></td><td><pre id="listing_21" class="listing"><span class="Keyword">proc</span> <span class="Identifier">main</span> <span class="Operator">=</span>
   <span class="Keyword">let</span> <span class="Identifier">maxDepth</span> <span class="Operator">=</span> <span class="Identifier">parseInt</span><span class="Punctuation">(</span><span class="Identifier">paramStr</span><span class="Punctuation">(</span><span class="DecNumber">1</span><span class="Punctuation">)</span><span class="Punctuation">)</span>
   <span class="Keyword">const</span> <span class="Identifier">minDepth</span> <span class="Operator">=</span> <span class="DecNumber">4</span>
   <span class="Keyword">let</span> <span class="Identifier">stretchDepth</span> <span class="Operator">=</span> <span class="Identifier">maxDepth</span> <span class="Operator">+</span> <span class="DecNumber">1</span>
@@ -660,8 +649,7 @@ Data: -----------+
       <span class="Identifier">freeTree</span><span class="Punctuation">(</span><span class="Identifier">tmp</span><span class="Punctuation">)</span>
     <span class="Identifier">echo</span> <span class="Identifier">iterations</span><span class="Punctuation">,</span> <span class="StringLit">&quot;</span><span class="EscapeSequence">\t</span><span class="StringLit"> trees of depth &quot;</span><span class="Punctuation">,</span> <span class="Identifier">depth</span><span class="Punctuation">,</span> <span class="StringLit">&quot;</span><span class="EscapeSequence">\t</span><span class="StringLit"> check:&quot;</span><span class="Punctuation">,</span> <span class="Identifier">check</span>
     <span class="Identifier">iterations</span> <span class="Operator">=</span> <span class="Identifier">iterations</span> <span class="Keyword">div</span> <span class="DecNumber">4</span>
-  <span class="Identifier">freeTree</span><span class="Punctuation">(</span><span class="Identifier">longLivedTree</span><span class="Punctuation">)</span>
-  <span class="Identifier">freeTree</span><span class="Punctuation">(</span><span class="Identifier">stree</span><span class="Punctuation">)</span>
+  <span class="Identifier">freeTree</span><span class="Punctuation">(</span><span class="Identifier">longLivedTree</span><span class="Punctuation">)</span><span class="Punctuation">;</span> <span class="Identifier">freeTree</span><span class="Punctuation">(</span><span class="Identifier">stree</span><span class="Punctuation">)</span>
 
 <span class="Identifier">main</span><span class="Punctuation">(</span><span class="Punctuation">)</span></pre></td></tr></tbody></table>
 </div>
@@ -670,8 +658,9 @@ Data: -----------+
 <tr><td>mark&amp;sweep GC</td><td>17s</td><td>588.047MiB</td></tr>
 <tr><td>deferred refcounting GC</td><td>16s</td><td>304.074MiB</td></tr>
 <tr><td>Boehm GC</td><td>12s</td><td>N/A</td></tr>
-<tr><td>ARC</td><td><strong>7.8s</strong></td><td>740.715MiB</td></tr>
-<tr><td>manual memory management</td><td>6.75s</td><td>473.195MiB</td></tr>
+<tr><td>ARC</td><td><strong>6.75s</strong></td><td>472.098MiB (379.074MiB)</td></tr>
+<tr><td>manual</td><td>5.23s</td><td>244.563MiB</td></tr>
+<tr><td>manual (withRc)</td><td>6.244</td><td>379.074MiB</td></tr>
 </table>
 </div>
 <div class="slide">
@@ -686,92 +675,6 @@ Data: -----------+
 <li>Enable composition between specialized memory management solutions.</li>
 </ul>
 
-</div>
-<div class="slide">
-<h1 id="destructors">Destructors</h1><table class="line-nums-table"><tbody><tr><td class="blob-line-nums"><pre class="line-nums">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-</pre></td><td><pre id="listing_23" class="listing"><span class="Keyword">type</span>
-  <span class="Identifier">myseq</span><span class="Operator">*</span><span class="Punctuation">[</span><span class="Identifier">T</span><span class="Punctuation">]</span> <span class="Operator">=</span> <span class="Keyword">object</span>
-    <span class="Identifier">len</span><span class="Punctuation">,</span> <span class="Identifier">cap</span><span class="Punctuation">:</span> <span class="Identifier">int</span>
-    <span class="Identifier">data</span><span class="Punctuation">:</span> <span class="Keyword">ptr</span> <span class="Identifier">UncheckedArray</span><span class="Punctuation">[</span><span class="Identifier">T</span><span class="Punctuation">]</span>
-
-<span class="Keyword">proc</span> <span class="Punctuation">`</span><span class="Operator">=</span><span class="Identifier">destroy</span><span class="Punctuation">`</span><span class="Operator">*</span><span class="Punctuation">[</span><span class="Identifier">T</span><span class="Punctuation">]</span><span class="Punctuation">(</span><span class="Identifier">x</span><span class="Punctuation">:</span> <span class="Keyword">var</span> <span class="Identifier">myseq</span><span class="Punctuation">[</span><span class="Identifier">T</span><span class="Punctuation">]</span><span class="Punctuation">)</span> <span class="Operator">=</span>
-  <span class="Keyword">if</span> <span class="Identifier">x</span><span class="Operator">.</span><span class="Identifier">data</span> <span class="Operator">!=</span> <span class="Keyword">nil</span><span class="Punctuation">:</span>
-    <span class="Keyword">for</span> <span class="Identifier">i</span> <span class="Keyword">in</span> <span class="FloatNumber">0.</span><span class="Operator">.&lt;</span><span class="Identifier">x</span><span class="Operator">.</span><span class="Identifier">len</span><span class="Punctuation">:</span> <span class="Punctuation">`</span><span class="Operator">=</span><span class="Identifier">destroy</span><span class="Punctuation">`</span><span class="Punctuation">(</span><span class="Identifier">x</span><span class="Punctuation">[</span><span class="Identifier">i</span><span class="Punctuation">]</span><span class="Punctuation">)</span>
-    <span class="Identifier">dealloc</span><span class="Punctuation">(</span><span class="Identifier">x</span><span class="Operator">.</span><span class="Identifier">data</span><span class="Punctuation">)</span>
-    <span class="Identifier">x</span><span class="Operator">.</span><span class="Identifier">data</span> <span class="Operator">=</span> <span class="Keyword">nil</span></pre></td></tr></tbody></table>
-</div>
-<div class="slide">
-<h1 id="assignment-operator">Assignment operator</h1><table class="line-nums-table"><tbody><tr><td class="blob-line-nums"><pre class="line-nums">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-</pre></td><td><pre id="listing_24" class="listing"><span class="Keyword">proc</span> <span class="Punctuation">`</span><span class="Operator">=</span><span class="Punctuation">`</span><span class="Operator">*</span><span class="Punctuation">[</span><span class="Identifier">T</span><span class="Punctuation">]</span><span class="Punctuation">(</span><span class="Identifier">a</span><span class="Punctuation">:</span> <span class="Keyword">var</span> <span class="Identifier">myseq</span><span class="Punctuation">[</span><span class="Identifier">T</span><span class="Punctuation">]</span><span class="Punctuation">;</span> <span class="Identifier">b</span><span class="Punctuation">:</span> <span class="Identifier">myseq</span><span class="Punctuation">[</span><span class="Identifier">T</span><span class="Punctuation">]</span><span class="Punctuation">)</span> <span class="Operator">=</span>
-  <span class="Comment"># do nothing for self-assignments:</span>
-  <span class="Keyword">if</span> <span class="Identifier">a</span><span class="Operator">.</span><span class="Identifier">data</span> <span class="Operator">==</span> <span class="Identifier">b</span><span class="Operator">.</span><span class="Identifier">data</span><span class="Punctuation">:</span> <span class="Keyword">return</span>
-  <span class="Punctuation">`</span><span class="Operator">=</span><span class="Identifier">destroy</span><span class="Punctuation">`</span><span class="Punctuation">(</span><span class="Identifier">a</span><span class="Punctuation">)</span>
-  <span class="Identifier">a</span><span class="Operator">.</span><span class="Identifier">len</span> <span class="Operator">=</span> <span class="Identifier">b</span><span class="Operator">.</span><span class="Identifier">len</span>
-  <span class="Identifier">a</span><span class="Operator">.</span><span class="Identifier">cap</span> <span class="Operator">=</span> <span class="Identifier">b</span><span class="Operator">.</span><span class="Identifier">cap</span>
-  <span class="Keyword">if</span> <span class="Identifier">b</span><span class="Operator">.</span><span class="Identifier">data</span> <span class="Operator">!=</span> <span class="Keyword">nil</span><span class="Punctuation">:</span>
-    <span class="Identifier">a</span><span class="Operator">.</span><span class="Identifier">data</span> <span class="Operator">=</span> <span class="Keyword">cast</span><span class="Punctuation">[</span><span class="Keyword">type</span><span class="Punctuation">(</span><span class="Identifier">a</span><span class="Operator">.</span><span class="Identifier">data</span><span class="Punctuation">)</span><span class="Punctuation">]</span><span class="Punctuation">(</span><span class="Identifier">alloc</span><span class="Punctuation">(</span><span class="Identifier">a</span><span class="Operator">.</span><span class="Identifier">cap</span> <span class="Operator">*</span> <span class="Identifier">sizeof</span><span class="Punctuation">(</span><span class="Identifier">T</span><span class="Punctuation">)</span><span class="Punctuation">)</span><span class="Punctuation">)</span>
-    <span class="Keyword">for</span> <span class="Identifier">i</span> <span class="Keyword">in</span> <span class="FloatNumber">0.</span><span class="Operator">.&lt;</span><span class="Identifier">a</span><span class="Operator">.</span><span class="Identifier">len</span><span class="Punctuation">:</span>
-      <span class="Identifier">a</span><span class="Operator">.</span><span class="Identifier">data</span><span class="Punctuation">[</span><span class="Identifier">i</span><span class="Punctuation">]</span> <span class="Operator">=</span> <span class="Identifier">b</span><span class="Operator">.</span><span class="Identifier">data</span><span class="Punctuation">[</span><span class="Identifier">i</span><span class="Punctuation">]</span></pre></td></tr></tbody></table>
-</div>
-<div class="slide">
-<h1 id="move-operator">Move operator</h1><table class="line-nums-table"><tbody><tr><td class="blob-line-nums"><pre class="line-nums">1
-2
-3
-4
-5
-6
-7
-</pre></td><td><pre id="listing_25" class="listing"><span class="Keyword">proc</span> <span class="Punctuation">`</span><span class="Operator">=</span><span class="Identifier">sink</span><span class="Punctuation">`</span><span class="Operator">*</span><span class="Punctuation">[</span><span class="Identifier">T</span><span class="Punctuation">]</span><span class="Punctuation">(</span><span class="Identifier">a</span><span class="Punctuation">:</span> <span class="Keyword">var</span> <span class="Identifier">myseq</span><span class="Punctuation">[</span><span class="Identifier">T</span><span class="Punctuation">]</span><span class="Punctuation">;</span> <span class="Identifier">b</span><span class="Punctuation">:</span> <span class="Identifier">myseq</span><span class="Punctuation">[</span><span class="Identifier">T</span><span class="Punctuation">]</span><span class="Punctuation">)</span> <span class="Operator">=</span>
-  <span class="Comment"># move assignment, optional.</span>
-  <span class="Comment"># Compiler is using `=destroy` and `copyMem` when not provided</span>
-  <span class="Punctuation">`</span><span class="Operator">=</span><span class="Identifier">destroy</span><span class="Punctuation">`</span><span class="Punctuation">(</span><span class="Identifier">a</span><span class="Punctuation">)</span>
-  <span class="Identifier">a</span><span class="Operator">.</span><span class="Identifier">len</span> <span class="Operator">=</span> <span class="Identifier">b</span><span class="Operator">.</span><span class="Identifier">len</span>
-  <span class="Identifier">a</span><span class="Operator">.</span><span class="Identifier">cap</span> <span class="Operator">=</span> <span class="Identifier">b</span><span class="Operator">.</span><span class="Identifier">cap</span>
-  <span class="Identifier">a</span><span class="Operator">.</span><span class="Identifier">data</span> <span class="Operator">=</span> <span class="Identifier">b</span><span class="Operator">.</span><span class="Identifier">data</span></pre></td></tr></tbody></table>
-</div>
-<div class="slide">
-<h1 id="accessors">Accessors</h1><table class="line-nums-table"><tbody><tr><td class="blob-line-nums"><pre class="line-nums">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-</pre></td><td><pre id="listing_26" class="listing"><span class="Keyword">proc</span> <span class="Identifier">add</span><span class="Operator">*</span><span class="Punctuation">[</span><span class="Identifier">T</span><span class="Punctuation">]</span><span class="Punctuation">(</span><span class="Identifier">x</span><span class="Punctuation">:</span> <span class="Keyword">var</span> <span class="Identifier">myseq</span><span class="Punctuation">[</span><span class="Identifier">T</span><span class="Punctuation">]</span><span class="Punctuation">;</span> <span class="Identifier">y</span><span class="Punctuation">:</span> <span class="Identifier">sink</span> <span class="Identifier">T</span><span class="Punctuation">)</span> <span class="Operator">=</span>
-  <span class="Keyword">if</span> <span class="Identifier">x</span><span class="Operator">.</span><span class="Identifier">len</span> <span class="Operator">&gt;=</span> <span class="Identifier">x</span><span class="Operator">.</span><span class="Identifier">cap</span><span class="Punctuation">:</span> <span class="Identifier">resize</span><span class="Punctuation">(</span><span class="Identifier">x</span><span class="Punctuation">)</span>
-  <span class="Identifier">x</span><span class="Operator">.</span><span class="Identifier">data</span><span class="Punctuation">[</span><span class="Identifier">x</span><span class="Operator">.</span><span class="Identifier">len</span><span class="Punctuation">]</span> <span class="Operator">=</span> <span class="Identifier">y</span>
-  <span class="Identifier">inc</span> <span class="Identifier">x</span><span class="Operator">.</span><span class="Identifier">len</span>
-
-<span class="Keyword">proc</span> <span class="Punctuation">`</span><span class="Punctuation">[</span><span class="Punctuation">]</span><span class="Punctuation">`</span><span class="Operator">*</span><span class="Punctuation">[</span><span class="Identifier">T</span><span class="Punctuation">]</span><span class="Punctuation">(</span><span class="Identifier">x</span><span class="Punctuation">:</span> <span class="Identifier">myseq</span><span class="Punctuation">[</span><span class="Identifier">T</span><span class="Punctuation">]</span><span class="Punctuation">;</span> <span class="Identifier">i</span><span class="Punctuation">:</span> <span class="Identifier">Natural</span><span class="Punctuation">)</span><span class="Punctuation">:</span> <span class="Identifier">lent</span> <span class="Identifier">T</span> <span class="Operator">=</span>
-  <span class="Identifier">assert</span> <span class="Identifier">i</span> <span class="Operator">&lt;</span> <span class="Identifier">x</span><span class="Operator">.</span><span class="Identifier">len</span>
-  <span class="Identifier">x</span><span class="Operator">.</span><span class="Identifier">data</span><span class="Punctuation">[</span><span class="Identifier">i</span><span class="Punctuation">]</span>
-
-<span class="Keyword">proc</span> <span class="Punctuation">`</span><span class="Punctuation">[</span><span class="Punctuation">]</span><span class="Operator">=</span><span class="Punctuation">`</span><span class="Operator">*</span><span class="Punctuation">[</span><span class="Identifier">T</span><span class="Punctuation">]</span><span class="Punctuation">(</span><span class="Identifier">x</span><span class="Punctuation">:</span> <span class="Keyword">var</span> <span class="Identifier">myseq</span><span class="Punctuation">[</span><span class="Identifier">T</span><span class="Punctuation">]</span><span class="Punctuation">;</span> <span class="Identifier">i</span><span class="Punctuation">:</span> <span class="Identifier">Natural</span><span class="Punctuation">;</span> <span class="Identifier">y</span><span class="Punctuation">:</span> <span class="Identifier">sink</span> <span class="Identifier">T</span><span class="Punctuation">)</span> <span class="Operator">=</span>
-  <span class="Identifier">assert</span> <span class="Identifier">i</span> <span class="Operator">&lt;</span> <span class="Identifier">x</span><span class="Operator">.</span><span class="Identifier">len</span>
-  <span class="Identifier">x</span><span class="Operator">.</span><span class="Identifier">data</span><span class="Punctuation">[</span><span class="Identifier">i</span><span class="Punctuation">]</span> <span class="Operator">=</span> <span class="Identifier">y</span></pre></td></tr></tbody></table>
 </div>
 <div class="slide">
 <h1 id="object-pooling">Object pooling</h1><table class="line-nums-table"><tbody><tr><td class="blob-line-nums"><pre class="line-nums">1
@@ -789,7 +692,7 @@ Data: -----------+
 13
 14
 15
-</pre></td><td><pre id="listing_27" class="listing"><span class="Keyword">include</span> <span class="Identifier">prelude</span>
+</pre></td><td><pre id="listing_22" class="listing"><span class="Keyword">include</span> <span class="Identifier">prelude</span>
 
 <span class="Keyword">type</span>
   <span class="Identifier">NodeObj</span> <span class="Operator">=</span> <span class="Keyword">object</span>
@@ -817,17 +720,17 @@ Data: -----------+
 9
 10
 11
-</pre></td><td><pre id="listing_28" class="listing"><span class="Keyword">proc</span> <span class="Punctuation">`</span><span class="Operator">=</span><span class="Punctuation">`</span><span class="Punctuation">(</span><span class="Identifier">dest</span><span class="Punctuation">:</span> <span class="Keyword">var</span> <span class="Identifier">Pool</span><span class="Punctuation">;</span> <span class="Identifier">src</span><span class="Punctuation">:</span> <span class="Identifier">Pool</span><span class="Punctuation">)</span> <span class="Punctuation">{</span><span class="Operator">.</span><span class="Identifier">error</span><span class="Operator">.</span><span class="Punctuation">}</span>
-
-<span class="Keyword">proc</span> <span class="Punctuation">`</span><span class="Operator">=</span><span class="Identifier">destroy</span><span class="Punctuation">`</span><span class="Punctuation">(</span><span class="Identifier">p</span><span class="Punctuation">:</span> <span class="Keyword">var</span> <span class="Identifier">Pool</span><span class="Punctuation">)</span> <span class="Operator">=</span>
-  <span class="Keyword">var</span> <span class="Identifier">it</span> <span class="Operator">=</span> <span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">last</span>
-  <span class="Keyword">while</span> <span class="Identifier">it</span> <span class="Operator">!=</span> <span class="Keyword">nil</span><span class="Punctuation">:</span>
-    <span class="Keyword">let</span> <span class="Identifier">next</span> <span class="Operator">=</span> <span class="Identifier">it</span><span class="Operator">.</span><span class="Identifier">next</span>
-    <span class="Identifier">dealloc</span><span class="Punctuation">(</span><span class="Identifier">it</span><span class="Punctuation">)</span>
-    <span class="Identifier">it</span> <span class="Operator">=</span> <span class="Identifier">next</span>
-  <span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">len</span> <span class="Operator">=</span> <span class="DecNumber">0</span>
-  <span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">lastCap</span> <span class="Operator">=</span> <span class="DecNumber">0</span>
-  <span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">last</span> <span class="Operator">=</span> <span class="Keyword">nil</span></pre></td></tr></tbody></table>
+</pre></td><td><pre id="listing_23" class="listing"><span class="Keyword">proc</span> <span class="Identifier">newNode</span><span class="Punctuation">(</span><span class="Identifier">p</span><span class="Punctuation">:</span> <span class="Keyword">var</span> <span class="Identifier">Pool</span><span class="Punctuation">)</span><span class="Punctuation">:</span> <span class="Identifier">Node</span> <span class="Operator">=</span>
+  <span class="Keyword">if</span> <span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">len</span> <span class="Operator">&gt;=</span> <span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">lastCap</span><span class="Punctuation">:</span>
+    <span class="Keyword">if</span> <span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">lastCap</span> <span class="Operator">==</span> <span class="DecNumber">0</span><span class="Punctuation">:</span> <span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">lastCap</span> <span class="Operator">=</span> <span class="DecNumber">4</span>
+    <span class="Keyword">elif</span> <span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">lastCap</span> <span class="Operator">&lt;</span> <span class="DecNumber">65_000</span><span class="Punctuation">:</span> <span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">lastCap</span> <span class="Operator">*=</span> <span class="DecNumber">2</span>
+    <span class="Keyword">var</span> <span class="Identifier">n</span> <span class="Operator">=</span> <span class="Keyword">cast</span><span class="Punctuation">[</span><span class="Keyword">ptr</span> <span class="Identifier">PoolNode</span><span class="Punctuation">]</span><span class="Punctuation">(</span><span class="Identifier">alloc</span><span class="Punctuation">(</span><span class="Identifier">sizeof</span><span class="Punctuation">(</span><span class="Identifier">PoolNode</span><span class="Punctuation">)</span> <span class="Operator">+</span> <span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">lastCap</span> <span class="Operator">*</span> <span class="Identifier">sizeof</span><span class="Punctuation">(</span><span class="Identifier">NodeObj</span><span class="Punctuation">)</span><span class="Punctuation">)</span><span class="Punctuation">)</span>
+    <span class="Identifier">n</span><span class="Operator">.</span><span class="Identifier">next</span> <span class="Operator">=</span> <span class="Keyword">nil</span>
+    <span class="Identifier">n</span><span class="Operator">.</span><span class="Identifier">next</span> <span class="Operator">=</span> <span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">last</span>
+    <span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">last</span> <span class="Operator">=</span> <span class="Identifier">n</span>
+    <span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">len</span> <span class="Operator">=</span> <span class="DecNumber">0</span>
+  <span class="Identifier">result</span> <span class="Operator">=</span> <span class="Keyword">addr</span><span class="Punctuation">(</span><span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">last</span><span class="Operator">.</span><span class="Identifier">elems</span><span class="Punctuation">[</span><span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">len</span><span class="Punctuation">]</span><span class="Punctuation">)</span>
+  <span class="Identifier">inc</span> <span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">len</span></pre></td></tr></tbody></table>
 </div>
 <div class="slide">
 <h1 id="object-pooling-3">Object pooling (3)</h1><table class="line-nums-table"><tbody><tr><td class="blob-line-nums"><pre class="line-nums">1
@@ -841,17 +744,17 @@ Data: -----------+
 9
 10
 11
-</pre></td><td><pre id="listing_29" class="listing"><span class="Keyword">proc</span> <span class="Identifier">newNode</span><span class="Punctuation">(</span><span class="Identifier">p</span><span class="Punctuation">:</span> <span class="Keyword">var</span> <span class="Identifier">Pool</span><span class="Punctuation">)</span><span class="Punctuation">:</span> <span class="Identifier">Node</span> <span class="Operator">=</span>
-  <span class="Keyword">if</span> <span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">len</span> <span class="Operator">&gt;=</span> <span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">lastCap</span><span class="Punctuation">:</span>
-    <span class="Keyword">if</span> <span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">lastCap</span> <span class="Operator">==</span> <span class="DecNumber">0</span><span class="Punctuation">:</span> <span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">lastCap</span> <span class="Operator">=</span> <span class="DecNumber">4</span>
-    <span class="Keyword">elif</span> <span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">lastCap</span> <span class="Operator">&lt;</span> <span class="DecNumber">65_000</span><span class="Punctuation">:</span> <span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">lastCap</span> <span class="Operator">*=</span> <span class="DecNumber">2</span>
-    <span class="Keyword">var</span> <span class="Identifier">n</span> <span class="Operator">=</span> <span class="Keyword">cast</span><span class="Punctuation">[</span><span class="Keyword">ptr</span> <span class="Identifier">PoolNode</span><span class="Punctuation">]</span><span class="Punctuation">(</span><span class="Identifier">alloc</span><span class="Punctuation">(</span><span class="Identifier">sizeof</span><span class="Punctuation">(</span><span class="Identifier">PoolNode</span><span class="Punctuation">)</span> <span class="Operator">+</span> <span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">lastCap</span> <span class="Operator">*</span> <span class="Identifier">sizeof</span><span class="Punctuation">(</span><span class="Identifier">NodeObj</span><span class="Punctuation">)</span><span class="Punctuation">)</span><span class="Punctuation">)</span>
-    <span class="Identifier">n</span><span class="Operator">.</span><span class="Identifier">next</span> <span class="Operator">=</span> <span class="Keyword">nil</span>
-    <span class="Identifier">n</span><span class="Operator">.</span><span class="Identifier">next</span> <span class="Operator">=</span> <span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">last</span>
-    <span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">last</span> <span class="Operator">=</span> <span class="Identifier">n</span>
-    <span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">len</span> <span class="Operator">=</span> <span class="DecNumber">0</span>
-  <span class="Identifier">result</span> <span class="Operator">=</span> <span class="Keyword">addr</span><span class="Punctuation">(</span><span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">last</span><span class="Operator">.</span><span class="Identifier">elems</span><span class="Punctuation">[</span><span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">len</span><span class="Punctuation">]</span><span class="Punctuation">)</span>
-  <span class="Identifier">inc</span> <span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">len</span></pre></td></tr></tbody></table>
+</pre></td><td><pre id="listing_24" class="listing"><span class="Keyword">proc</span> <span class="Punctuation">`</span><span class="Operator">=</span><span class="Punctuation">`</span><span class="Punctuation">(</span><span class="Identifier">dest</span><span class="Punctuation">:</span> <span class="Keyword">var</span> <span class="Identifier">Pool</span><span class="Punctuation">;</span> <span class="Identifier">src</span><span class="Punctuation">:</span> <span class="Identifier">Pool</span><span class="Punctuation">)</span> <span class="Punctuation">{</span><span class="Operator">.</span><span class="Identifier">error</span><span class="Operator">.</span><span class="Punctuation">}</span>
+
+<span class="Keyword">proc</span> <span class="Punctuation">`</span><span class="Operator">=</span><span class="Identifier">destroy</span><span class="Punctuation">`</span><span class="Punctuation">(</span><span class="Identifier">p</span><span class="Punctuation">:</span> <span class="Keyword">var</span> <span class="Identifier">Pool</span><span class="Punctuation">)</span> <span class="Operator">=</span>
+  <span class="Keyword">var</span> <span class="Identifier">it</span> <span class="Operator">=</span> <span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">last</span>
+  <span class="Keyword">while</span> <span class="Identifier">it</span> <span class="Operator">!=</span> <span class="Keyword">nil</span><span class="Punctuation">:</span>
+    <span class="Keyword">let</span> <span class="Identifier">next</span> <span class="Operator">=</span> <span class="Identifier">it</span><span class="Operator">.</span><span class="Identifier">next</span>
+    <span class="Identifier">dealloc</span><span class="Punctuation">(</span><span class="Identifier">it</span><span class="Punctuation">)</span>
+    <span class="Identifier">it</span> <span class="Operator">=</span> <span class="Identifier">next</span>
+  <span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">len</span> <span class="Operator">=</span> <span class="DecNumber">0</span>
+  <span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">lastCap</span> <span class="Operator">=</span> <span class="DecNumber">0</span>
+  <span class="Identifier">p</span><span class="Operator">.</span><span class="Identifier">last</span> <span class="Operator">=</span> <span class="Keyword">nil</span></pre></td></tr></tbody></table>
 </div>
 <div class="slide">
 <h1 id="object-pooling-4">Object pooling (4)</h1><table class="line-nums-table"><tbody><tr><td class="blob-line-nums"><pre class="line-nums">1
@@ -866,7 +769,7 @@ Data: -----------+
 10
 11
 12
-</pre></td><td><pre id="listing_30" class="listing"><span class="Keyword">proc</span> <span class="Identifier">checkTree</span><span class="Punctuation">(</span><span class="Identifier">n</span><span class="Punctuation">:</span> <span class="Identifier">Node</span><span class="Punctuation">)</span><span class="Punctuation">:</span> <span class="Identifier">int</span> <span class="Operator">=</span>
+</pre></td><td><pre id="listing_25" class="listing"><span class="Keyword">proc</span> <span class="Identifier">checkTree</span><span class="Punctuation">(</span><span class="Identifier">n</span><span class="Punctuation">:</span> <span class="Identifier">Node</span><span class="Punctuation">)</span><span class="Punctuation">:</span> <span class="Identifier">int</span> <span class="Operator">=</span>
   <span class="Keyword">if</span> <span class="Identifier">n</span><span class="Operator">.</span><span class="Identifier">le</span> <span class="Operator">==</span> <span class="Keyword">nil</span><span class="Punctuation">:</span> <span class="DecNumber">1</span>
   <span class="Keyword">else</span><span class="Punctuation">:</span> <span class="DecNumber">1</span> <span class="Operator">+</span> <span class="Identifier">checkTree</span><span class="Punctuation">(</span><span class="Identifier">n</span><span class="Operator">.</span><span class="Identifier">le</span><span class="Punctuation">)</span> <span class="Operator">+</span> <span class="Identifier">checkTree</span><span class="Punctuation">(</span><span class="Identifier">n</span><span class="Operator">.</span><span class="Identifier">ri</span><span class="Punctuation">)</span>
 
@@ -899,7 +802,7 @@ Data: -----------+
 17
 18
 19
-</pre></td><td><pre id="listing_31" class="listing"><span class="Keyword">proc</span> <span class="Identifier">main</span> <span class="Operator">=</span>
+</pre></td><td><pre id="listing_26" class="listing"><span class="Keyword">proc</span> <span class="Identifier">main</span> <span class="Operator">=</span>
   <span class="Keyword">let</span> <span class="Identifier">maxDepth</span> <span class="Operator">=</span> <span class="Identifier">parseInt</span><span class="Punctuation">(</span><span class="Identifier">paramStr</span><span class="Punctuation">(</span><span class="DecNumber">1</span><span class="Punctuation">)</span><span class="Punctuation">)</span>
   <span class="Keyword">const</span> <span class="Identifier">minDepth</span> <span class="Operator">=</span> <span class="DecNumber">4</span>
   <span class="Keyword">let</span> <span class="Identifier">stretchDepth</span> <span class="Operator">=</span> <span class="Identifier">maxDepth</span> <span class="Operator">+</span> <span class="DecNumber">1</span>
@@ -924,8 +827,9 @@ Data: -----------+
 <tr><td>mark&amp;sweep GC</td><td>17s</td><td>588.047MiB</td></tr>
 <tr><td>deferred refcounting GC</td><td>16s</td><td>304.074MiB</td></tr>
 <tr><td>Boehm GC</td><td>12s</td><td>N/A</td></tr>
-<tr><td>ARC</td><td>7.8s</td><td>740.715MiB</td></tr>
-<tr><td>manual memory management</td><td>6.75s</td><td>473.195MiB</td></tr>
+<tr><td>ARC</td><td>6.75s</td><td>472.098MiB (379.074MiB)</td></tr>
+<tr><td>manual</td><td>5.23s</td><td>244.563MiB</td></tr>
+<tr><td>manual (withRc)</td><td>6.244</td><td>379.074MiB</td></tr>
 <tr><td>object pooling</td><td><strong>2.4s</strong></td><td>251.504MiB</td></tr>
 </table>
 </div>

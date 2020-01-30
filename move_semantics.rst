@@ -133,23 +133,12 @@ Implicit move (2)
 .. code-block::nim
    :number-lines:
 
-  var a = f(g()) # can move g's result into 'f'
-  # can move f's result into a
-
-
-Implicit move (3)
-=================
-
-
-.. code-block::nim
-   :number-lines:
-
   var namedValue = g()
   var a = f(namedValue) # can move namedValue into 'f'
   # can move f's result into a
 
 
-Implicit move (4)
+Implicit move (3)
 =================
 
 
@@ -441,8 +430,9 @@ Benchmark: Throughput
   mark&sweep GC                     17s              588.047MiB
   deferred refcounting GC           16s              304.074MiB
   Boehm GC                          12s              N/A
-  ARC                               **6.75s**        472.098MiB
-  manual memory management          5.23s            244.563MiB
+  ARC                               **6.75s**        472.098MiB (379.074MiB)
+  manual                            5.23s            244.563MiB
+  manual (withRc)                   6.244            379.074MiB
 ==============================      ==============   =============
 
 
@@ -474,75 +464,76 @@ Custom containers
 - Enable composition between specialized memory management solutions.
 
 
-Destructors
-===========
+..
+  Destructors
+  ===========
 
-.. code-block::nim
-   :number-lines:
+  .. code-block::nim
+    :number-lines:
 
-  type
-    myseq*[T] = object
-      len, cap: int
-      data: ptr UncheckedArray[T]
+    type
+      myseq*[T] = object
+        len, cap: int
+        data: ptr UncheckedArray[T]
 
-  proc `=destroy`*[T](x: var myseq[T]) =
-    if x.data != nil:
-      for i in 0..<x.len: `=destroy`(x[i])
-      dealloc(x.data)
-      x.data = nil
-
-
-Assignment operator
-===================
-
-.. code-block::nim
-   :number-lines:
-
-  proc `=`*[T](a: var myseq[T]; b: myseq[T]) =
-    # do nothing for self-assignments:
-    if a.data == b.data: return
-    `=destroy`(a)
-    a.len = b.len
-    a.cap = b.cap
-    if b.data != nil:
-      a.data = cast[type(a.data)](alloc(a.cap * sizeof(T)))
-      for i in 0..<a.len:
-        a.data[i] = b.data[i]
+    proc `=destroy`*[T](x: var myseq[T]) =
+      if x.data != nil:
+        for i in 0..<x.len: `=destroy`(x[i])
+        dealloc(x.data)
+        x.data = nil
 
 
-Move operator
-=============
+  Assignment operator
+  ===================
 
-.. code-block::nim
-   :number-lines:
+  .. code-block::nim
+    :number-lines:
 
-  proc `=sink`*[T](a: var myseq[T]; b: myseq[T]) =
-    # move assignment, optional.
-    # Compiler is using `=destroy` and `copyMem` when not provided
-    `=destroy`(a)
-    a.len = b.len
-    a.cap = b.cap
-    a.data = b.data
+    proc `=`*[T](a: var myseq[T]; b: myseq[T]) =
+      # do nothing for self-assignments:
+      if a.data == b.data: return
+      `=destroy`(a)
+      a.len = b.len
+      a.cap = b.cap
+      if b.data != nil:
+        a.data = cast[type(a.data)](alloc(a.cap * sizeof(T)))
+        for i in 0..<a.len:
+          a.data[i] = b.data[i]
 
 
-Accessors
-=========
+  Move operator
+  =============
 
-.. code-block::nim
-   :number-lines:
+  .. code-block::nim
+    :number-lines:
 
-  proc add*[T](x: var myseq[T]; y: sink T) =
-    if x.len >= x.cap: resize(x)
-    x.data[x.len] = y
-    inc x.len
+    proc `=sink`*[T](a: var myseq[T]; b: myseq[T]) =
+      # move assignment, optional.
+      # Compiler is using `=destroy` and `copyMem` when not provided
+      `=destroy`(a)
+      a.len = b.len
+      a.cap = b.cap
+      a.data = b.data
 
-  proc `[]`*[T](x: myseq[T]; i: Natural): lent T =
-    assert i < x.len
-    x.data[i]
 
-  proc `[]=`*[T](x: var myseq[T]; i: Natural; y: sink T) =
-    assert i < x.len
-    x.data[i] = y
+  Accessors
+  =========
+
+  .. code-block::nim
+    :number-lines:
+
+    proc add*[T](x: var myseq[T]; y: sink T) =
+      if x.len >= x.cap: resize(x)
+      x.data[x.len] = y
+      inc x.len
+
+    proc `[]`*[T](x: myseq[T]; i: Natural): lent T =
+      assert i < x.len
+      x.data[i]
+
+    proc `[]=`*[T](x: var myseq[T]; i: Natural; y: sink T) =
+      assert i < x.len
+      x.data[i] = y
 
 
 
@@ -575,25 +566,6 @@ Object pooling (2)
 .. code-block::nim
    :number-lines:
 
-  proc `=`(dest: var Pool; src: Pool) {.error.}
-
-  proc `=destroy`(p: var Pool) =
-    var it = p.last
-    while it != nil:
-      let next = it.next
-      dealloc(it)
-      it = next
-    p.len = 0
-    p.lastCap = 0
-    p.last = nil
-
-
-Object pooling (3)
-==================
-
-.. code-block::nim
-   :number-lines:
-
   proc newNode(p: var Pool): Node =
     if p.len >= p.lastCap:
       if p.lastCap == 0: p.lastCap = 4
@@ -605,6 +577,25 @@ Object pooling (3)
       p.len = 0
     result = addr(p.last.elems[p.len])
     inc p.len
+
+
+Object pooling (3)
+==================
+
+.. code-block::nim
+   :number-lines:
+
+  proc `=`(dest: var Pool; src: Pool) {.error.}
+
+  proc `=destroy`(p: var Pool) =
+    var it = p.last
+    while it != nil:
+      let next = it.next
+      dealloc(it)
+      it = next
+    p.len = 0
+    p.lastCap = 0
+    p.last = nil
 
 
 Object pooling (4)
@@ -664,8 +655,9 @@ Benchmark: Throughput
   mark&sweep GC                     17s              588.047MiB
   deferred refcounting GC           16s              304.074MiB
   Boehm GC                          12s              N/A
-  ARC                               6.75s            472.098MiB
-  manual memory management          5.23s            244.563MiB
+  ARC                               6.75s            472.098MiB (379.074MiB)
+  manual                            5.23s            244.563MiB
+  manual (withRc)                   6.244            379.074MiB
   object pooling                    **2.4s**         251.504MiB
 ==============================      ==============   =============
 

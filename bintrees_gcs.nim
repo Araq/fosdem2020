@@ -18,8 +18,9 @@ proc main =
 
   let stretchDepth = maxDepth + 1
 
+  let stree = makeTree(stretchDepth)
   echo("stretch tree of depth ", stretchDepth, "\t check:",
-    checkTree makeTree(stretchDepth))
+    checkTree stree)
 
   let longLivedTree = makeTree(maxDepth)
   var iterations = 1 shl maxDepth
@@ -27,7 +28,9 @@ proc main =
   for depth in countup(minDepth, maxDepth, 2):
     var check = 0
     for i in 1..iterations:
-      check += checkTree(makeTree(depth))
+      var tmp = makeTree(depth)
+      check += checkTree(tmp)
+      `=destroy`(tmp)
 
     echo iterations, "\t trees of depth ", depth, "\t check:", check
     iterations = iterations div 4

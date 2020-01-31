@@ -243,7 +243,7 @@ p.pic {
 
 <link rel="stylesheet" type="text/css" media="screen, projection, print"
  href="slidy2/styles/w3c-blue.css" />
-
+<link rel="stylesheet" href="markdeep/slides.css">
 </head>
 <body>
   <div class="background">
@@ -281,27 +281,35 @@ p.pic {
 <span class="Identifier">someNumbers</span><span class="Operator">.</span><span class="Identifier">add</span> <span class="DecNumber">137</span></pre></td></tr></tbody></table>
 </div>
 <div class="slide">
-<h1 id="what-happens-in-memory">What happens in memory</h1><pre>
-someNumbers
------------
+<h1 id="what-happens-in-memory">What happens in memory</h1>
+<diagram>
 
-Length: 2        +--------&gt;  299_792_458
-Capacity: 2      |                25_813
-Data: -----------+</pre>
+  someNumbers
+
+
+
+  Length: 2        +-------->  299_792_458
+  Capacity: 2      |                25_813
+  Data: -----------+
+</diagram>
 
 </div>
 <div class="slide">
-<h1 id="what-happens-in-memory-2">What happens in memory (2)</h1><pre>
-someNumbers
------------
+<h1 id="what-happens-in-memory-2">What happens in memory (2)</h1>
+<diagram>
 
-Length: 3        +---//---&gt;  299_792_458
-Capacity: 4      |                25_813
-Data: -----------+
-                 |
-                 +--------&gt;  299_792_458
-                                  25_813
-                                     137</pre>
+  someNumbers
+
+
+                         / 
+  Length: 3        +----+--->  299_792_458
+  Capacity: 4      |   /            25_813
+  Data: -----------+
+                   |
+                   +-------->  299_792_458
+                                    25_813
+                                       137
+</diagram>
 
 </div>
 <div class="slide">
@@ -858,6 +866,8 @@ Data: -----------+
 </table>
 
 
+<script>window.markdeepOptions = {mode: 'html'};</script>
+<script src="markdeep/markdeep.min.js"></script>
 </body>
 </div>
 </html>

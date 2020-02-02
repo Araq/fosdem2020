@@ -41,32 +41,13 @@ What happens in memory
 ======================
 
 ::
-
-  someNumbers
-  -----------
-
-  Length: 2        +-------->  299_792_458
-  Capacity: 2      |                25_813
-  Data: -----------+
-
+  diagram1.markdeep
 
 What happens in memory (2)
 ==========================
 
 ::
-
-  someNumbers
-  -----------
-
-  Length: 3        +---//--->  299_792_458
-  Capacity: 4      |                25_813
-  Data: -----------+
-                   |
-                   +-------->  299_792_458
-                                    25_813
-                                       137
-
-
+  diagram2.markdeep
 
 Shallow copy, copy, move
 ========================

@@ -568,6 +568,14 @@ Data: -----------+
 <span class="Identifier">main</span><span class="Punctuation">(</span><span class="Punctuation">)</span></pre></td></tr></tbody></table>
 </div>
 <div class="slide">
+<h1 id="benchmarkcolon-throughput">Benchmark: Throughput</h1><table border="1" class="docutils"><tr><th>Memory management strategy</th><th>Time</th><th>Peak Memory</th></tr>
+<tr><td>mark&amp;sweep GC</td><td>17s</td><td>588.047MiB</td></tr>
+<tr><td>deferred refcounting GC</td><td>16s</td><td>304.074MiB</td></tr>
+<tr><td>Boehm GC</td><td>12s</td><td>N/A</td></tr>
+<tr><td>ARC</td><td><strong>6.75s</strong></td><td>472.098MiB</td></tr>
+</table>
+</div>
+<div class="slide">
 <h1 id="manual-memory-management">Manual memory management</h1><table class="line-nums-table"><tbody><tr><td class="blob-line-nums"><pre class="line-nums">1
 2
 3

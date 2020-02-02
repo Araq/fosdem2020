@@ -364,6 +364,19 @@ ARC (2)
   main()
 
 
+Benchmark: Throughput
+=====================
+
+==============================      ==============   =============
+  Memory management strategy        Time             Peak Memory
+==============================      ==============   =============
+  mark&sweep GC                     17s              588.047MiB
+  deferred refcounting GC           16s              304.074MiB
+  Boehm GC                          12s              N/A
+  ARC                               **6.75s**        472.098MiB
+==============================      ==============   =============
+
+
 Manual memory management
 ========================
 
@@ -570,13 +583,14 @@ Object pooling (2)
     if p.len >= p.lastCap:
       if p.lastCap == 0: p.lastCap = 4
       elif p.lastCap < 65_000: p.lastCap *= 2
-      var n = cast[ptr PoolNode](alloc(sizeof(PoolNode) + p.lastCap * sizeof(NodeObj)))
+      var n = cast[ptr PoolNode](alloc(sizeof(PoolNode) +
+        p.lastCap * sizeof(NodeObj)))
       n.next = nil
       n.next = p.last
       p.last = n
       p.len = 0
     result = addr(p.last.elems[p.len])
-    inc p.len
+    p.len += 1
 
 
 Object pooling (3)

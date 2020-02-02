@@ -32,41 +32,22 @@ Motivating example
 .. code-block::nim
    :number-lines:
 
-  var someNumbers = @[299_792_458, 25_813]
+  var someNumbers = @[1, 2]
 
-  someNumbers.add 137
+  someNumbers.add 3
 
 
 What happens in memory
 ======================
 
 ::
-
-  someNumbers
-  -----------
-
-  Length: 2        +-------->  299_792_458
-  Capacity: 2      |                25_813
-  Data: -----------+
-
+  diagram1.markdeep
 
 What happens in memory (2)
 ==========================
 
 ::
-
-  someNumbers
-  -----------
-
-  Length: 3        +---//--->  299_792_458
-  Capacity: 4      |                25_813
-  Data: -----------+
-                   |
-                   +-------->  299_792_458
-                                    25_813
-                                       137
-
-
+  diagram2.markdeep
 
 Shallow copy, copy, move
 ========================
@@ -75,9 +56,9 @@ Shallow copy, copy, move
 .. code-block::nim
    :number-lines:
 
-  var someNumbers = @[299_792_458, 25_813]
+  var someNumbers = @[1, 2]
   var other = someNumbers
-  someNumbers.add 137  # other contains a dangling pointer?
+  someNumbers.add 3  # other contains a dangling pointer?
 
 
 Shallow copy, copy, move (2)
@@ -87,9 +68,9 @@ Shallow copy, copy, move (2)
 .. code-block::nim
    :number-lines:
 
-  var someNumbers = @[299_792_458, 25_813]
+  var someNumbers = @[1, 2]
   var other = someNumbers
-  someNumbers.add 137  # other contains a dangling pointer?
+  someNumbers.add 3  # other contains a dangling pointer?
 
 
 1. Solution: Create a new sequence with the same elements.
@@ -107,12 +88,12 @@ Explicit move
 .. code-block::nim
    :number-lines:
 
-  var someNumbers = @[299_792_458, 25_813]
+  var someNumbers = @[1, 2]
   var other = move(someNumbers)
   # someNumbers is empty now.
-  someNumbers.add 137
+  someNumbers.add 3
 
-  assert someNumbers == @[137]
+  assert someNumbers == @[3]
 
 
 Implicit move

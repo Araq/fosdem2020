@@ -1,0 +1,15 @@
+
+<diagram>
+
+  someNumbers
+
+
+                         /
+  Length: 3        +----+--->       1
+  Capacity: 4      |   /            2
+  Data: -----------+
+                   |
+                   +-------->       1
+                                    2
+                                    3
+</diagram>

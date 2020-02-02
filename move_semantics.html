@@ -243,7 +243,7 @@ p.pic {
 
 <link rel="stylesheet" type="text/css" media="screen, projection, print"
  href="slidy2/styles/w3c-blue.css" />
-
+<link rel="stylesheet" href="markdeep/slides.css">
 </head>
 <body>
   <div class="background">
@@ -276,49 +276,57 @@ p.pic {
 <h1 id="motivating-example">Motivating example</h1><table class="line-nums-table"><tbody><tr><td class="blob-line-nums"><pre class="line-nums">1
 2
 3
-</pre></td><td><pre id="listing_1" class="listing"><span class="Keyword">var</span> <span class="Identifier">someNumbers</span> <span class="Operator">=</span> <span class="Operator">@</span><span class="Punctuation">[</span><span class="DecNumber">299_792_458</span><span class="Punctuation">,</span> <span class="DecNumber">25_813</span><span class="Punctuation">]</span>
+</pre></td><td><pre id="listing_1" class="listing"><span class="Keyword">var</span> <span class="Identifier">someNumbers</span> <span class="Operator">=</span> <span class="Operator">@</span><span class="Punctuation">[</span><span class="DecNumber">1</span><span class="Punctuation">,</span> <span class="DecNumber">2</span><span class="Punctuation">]</span>
 
-<span class="Identifier">someNumbers</span><span class="Operator">.</span><span class="Identifier">add</span> <span class="DecNumber">137</span></pre></td></tr></tbody></table>
+<span class="Identifier">someNumbers</span><span class="Operator">.</span><span class="Identifier">add</span> <span class="DecNumber">3</span></pre></td></tr></tbody></table>
 </div>
 <div class="slide">
-<h1 id="what-happens-in-memory">What happens in memory</h1><pre>
-someNumbers
------------
+<h1 id="what-happens-in-memory">What happens in memory</h1>
+<diagram>
 
-Length: 2        +--------&gt;  299_792_458
-Capacity: 2      |                25_813
-Data: -----------+</pre>
+  someNumbers
+
+
+
+  Length: 2        +-------->       1
+  Capacity: 2      |                2
+  Data: -----------+
+</diagram>
 
 </div>
 <div class="slide">
-<h1 id="what-happens-in-memory-2">What happens in memory (2)</h1><pre>
-someNumbers
------------
+<h1 id="what-happens-in-memory-2">What happens in memory (2)</h1>
+<diagram>
 
-Length: 3        +---//---&gt;  299_792_458
-Capacity: 4      |                25_813
-Data: -----------+
-                 |
-                 +--------&gt;  299_792_458
-                                  25_813
-                                     137</pre>
+  someNumbers
+
+
+                         /
+  Length: 3        +----+--->       1
+  Capacity: 4      |   /            2
+  Data: -----------+
+                   |
+                   +-------->       1
+                                    2
+                                    3
+</diagram>
 
 </div>
 <div class="slide">
 <h1 id="shallow-copy-copy-move">Shallow copy, copy, move</h1><table class="line-nums-table"><tbody><tr><td class="blob-line-nums"><pre class="line-nums">1
 2
 3
-</pre></td><td><pre id="listing_2" class="listing"><span class="Keyword">var</span> <span class="Identifier">someNumbers</span> <span class="Operator">=</span> <span class="Operator">@</span><span class="Punctuation">[</span><span class="DecNumber">299_792_458</span><span class="Punctuation">,</span> <span class="DecNumber">25_813</span><span class="Punctuation">]</span>
+</pre></td><td><pre id="listing_2" class="listing"><span class="Keyword">var</span> <span class="Identifier">someNumbers</span> <span class="Operator">=</span> <span class="Operator">@</span><span class="Punctuation">[</span><span class="DecNumber">1</span><span class="Punctuation">,</span> <span class="DecNumber">2</span><span class="Punctuation">]</span>
 <span class="Keyword">var</span> <span class="Identifier">other</span> <span class="Operator">=</span> <span class="Identifier">someNumbers</span>
-<span class="Identifier">someNumbers</span><span class="Operator">.</span><span class="Identifier">add</span> <span class="DecNumber">137</span>  <span class="Comment"># other contains a dangling pointer?</span></pre></td></tr></tbody></table>
+<span class="Identifier">someNumbers</span><span class="Operator">.</span><span class="Identifier">add</span> <span class="DecNumber">3</span>  <span class="Comment"># other contains a dangling pointer?</span></pre></td></tr></tbody></table>
 </div>
 <div class="slide">
 <h1 id="shallow-copy-copy-move-2">Shallow copy, copy, move (2)</h1><table class="line-nums-table"><tbody><tr><td class="blob-line-nums"><pre class="line-nums">1
 2
 3
-</pre></td><td><pre id="listing_3" class="listing"><span class="Keyword">var</span> <span class="Identifier">someNumbers</span> <span class="Operator">=</span> <span class="Operator">@</span><span class="Punctuation">[</span><span class="DecNumber">299_792_458</span><span class="Punctuation">,</span> <span class="DecNumber">25_813</span><span class="Punctuation">]</span>
+</pre></td><td><pre id="listing_3" class="listing"><span class="Keyword">var</span> <span class="Identifier">someNumbers</span> <span class="Operator">=</span> <span class="Operator">@</span><span class="Punctuation">[</span><span class="DecNumber">1</span><span class="Punctuation">,</span> <span class="DecNumber">2</span><span class="Punctuation">]</span>
 <span class="Keyword">var</span> <span class="Identifier">other</span> <span class="Operator">=</span> <span class="Identifier">someNumbers</span>
-<span class="Identifier">someNumbers</span><span class="Operator">.</span><span class="Identifier">add</span> <span class="DecNumber">137</span>  <span class="Comment"># other contains a dangling pointer?</span></pre></td></tr></tbody></table><ol class="simple"><li>Solution: Create a new sequence with the same elements. (&quot;Deep&quot; copy: C++98, Nim)</li>
+<span class="Identifier">someNumbers</span><span class="Operator">.</span><span class="Identifier">add</span> <span class="DecNumber">3</span>  <span class="Comment"># other contains a dangling pointer?</span></pre></td></tr></tbody></table><ol class="simple"><li>Solution: Create a new sequence with the same elements. (&quot;Deep&quot; copy: C++98, Nim)</li>
 <li>Solution: Use a pointer to a pointer. (Slower, more allocations.)</li>
 <li>Solution: Disallow the assignment.</li>
 <li>Solution: Use a GC mechanism to free the old block.</li>
@@ -333,12 +341,12 @@ Data: -----------+
 4
 5
 6
-</pre></td><td><pre id="listing_4" class="listing"><span class="Keyword">var</span> <span class="Identifier">someNumbers</span> <span class="Operator">=</span> <span class="Operator">@</span><span class="Punctuation">[</span><span class="DecNumber">299_792_458</span><span class="Punctuation">,</span> <span class="DecNumber">25_813</span><span class="Punctuation">]</span>
+</pre></td><td><pre id="listing_4" class="listing"><span class="Keyword">var</span> <span class="Identifier">someNumbers</span> <span class="Operator">=</span> <span class="Operator">@</span><span class="Punctuation">[</span><span class="DecNumber">1</span><span class="Punctuation">,</span> <span class="DecNumber">2</span><span class="Punctuation">]</span>
 <span class="Keyword">var</span> <span class="Identifier">other</span> <span class="Operator">=</span> <span class="Identifier">move</span><span class="Punctuation">(</span><span class="Identifier">someNumbers</span><span class="Punctuation">)</span>
 <span class="Comment"># someNumbers is empty now.</span>
-<span class="Identifier">someNumbers</span><span class="Operator">.</span><span class="Identifier">add</span> <span class="DecNumber">137</span>
+<span class="Identifier">someNumbers</span><span class="Operator">.</span><span class="Identifier">add</span> <span class="DecNumber">3</span>
 
-<span class="Identifier">assert</span> <span class="Identifier">someNumbers</span> <span class="Operator">==</span> <span class="Operator">@</span><span class="Punctuation">[</span><span class="DecNumber">137</span><span class="Punctuation">]</span></pre></td></tr></tbody></table>
+<span class="Identifier">assert</span> <span class="Identifier">someNumbers</span> <span class="Operator">==</span> <span class="Operator">@</span><span class="Punctuation">[</span><span class="DecNumber">3</span><span class="Punctuation">]</span></pre></td></tr></tbody></table>
 </div>
 <div class="slide">
 <h1 id="implicit-move">Implicit move</h1><table class="line-nums-table"><tbody><tr><td class="blob-line-nums"><pre class="line-nums">1
@@ -868,6 +876,8 @@ Data: -----------+
 </table>
 
 
+<script>window.markdeepOptions = {mode: 'html'};</script>
+<script src="markdeep/markdeep.min.js"></script>
 </body>
 </div>
 </html>

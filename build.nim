@@ -37,6 +37,8 @@ proc main(file: string) =
       f.writeln(line.tline)
     else:
       f.writeln(line.tline)
+  for x in os.walkFiles("*.markdeep"):
+    f = f.replace("<pre>$1</pre>" % x, x.readFile)
   writeFile("$1.html" % file, f)
 
 for x in os.walkFiles("*.rst"):

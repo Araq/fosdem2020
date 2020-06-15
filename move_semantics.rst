@@ -1,29 +1,23 @@
 ========================================
-          Nim - Move semantics
+          Nim - ARC / ORC
 ========================================
 
 
 Introduction
 ============
 
-"Copying bad design is not good design." -- Nim's unofficial motto
+How I removed the garbage collector from Nim in order to
+replace it with reference counting.
 
 
 Introduction
 ============
 
-"Copying bad design is not good design." -- Nim's unofficial motto
+How I removed the garbage collector from Nim in order to
+replace it with reference counting.
 
-- "Do not copy bad designs!"
+Later on I added a cycle collector.
 
-
-Introduction
-============
-
-"Copying bad design is not good design." -- Nim's unofficial motto
-
-- "Do not copy bad designs!"
-- "Recombine good bits from several sources!"
 
 
 Motivating example
@@ -458,76 +452,76 @@ Custom containers
 - Enable composition between specialized memory management solutions.
 
 
-..
-  Destructors
-  ===========
 
-  .. code-block::nim
-    :number-lines:
+Destructors
+===========
 
-    type
-      myseq*[T] = object
-        len, cap: int
-        data: ptr UncheckedArray[T]
+.. code-block::nim
+   :number-lines:
 
-    proc `=destroy`*[T](x: var myseq[T]) =
-      if x.data != nil:
-        for i in 0..<x.len: `=destroy`(x[i])
-        dealloc(x.data)
-        x.data = nil
+  type
+    myseq*[T] = object
+      len, cap: int
+      data: ptr UncheckedArray[T]
 
-
-  Assignment operator
-  ===================
-
-  .. code-block::nim
-    :number-lines:
-
-    proc `=`*[T](a: var myseq[T]; b: myseq[T]) =
-      # do nothing for self-assignments:
-      if a.data == b.data: return
-      `=destroy`(a)
-      a.len = b.len
-      a.cap = b.cap
-      if b.data != nil:
-        a.data = cast[type(a.data)](alloc(a.cap * sizeof(T)))
-        for i in 0..<a.len:
-          a.data[i] = b.data[i]
+  proc `=destroy`*[T](x: var myseq[T]) =
+    if x.data != nil:
+      for i in 0..<x.len: `=destroy`(x[i])
+      dealloc(x.data)
+      x.data = nil
 
 
-  Move operator
-  =============
+Assignment operator
+===================
 
-  .. code-block::nim
-    :number-lines:
+.. code-block::nim
+   :number-lines:
 
-    proc `=sink`*[T](a: var myseq[T]; b: myseq[T]) =
-      # move assignment, optional.
-      # Compiler is using `=destroy` and `copyMem` when not provided
-      `=destroy`(a)
-      a.len = b.len
-      a.cap = b.cap
-      a.data = b.data
+  proc `=`*[T](a: var myseq[T]; b: myseq[T]) =
+    # do nothing for self-assignments:
+    if a.data == b.data: return
+    `=destroy`(a)
+    a.len = b.len
+    a.cap = b.cap
+    if b.data != nil:
+      a.data = cast[type(a.data)](alloc(a.cap * sizeof(T)))
+      for i in 0..<a.len:
+        a.data[i] = b.data[i]
 
 
-  Accessors
-  =========
+Move operator
+=============
 
-  .. code-block::nim
-    :number-lines:
+.. code-block::nim
+   :number-lines:
 
-    proc add*[T](x: var myseq[T]; y: sink T) =
-      if x.len >= x.cap: resize(x)
-      x.data[x.len] = y
-      inc x.len
+  proc `=sink`*[T](a: var myseq[T]; b: myseq[T]) =
+    # move assignment, optional.
+    # Compiler is using `=destroy` and `copyMem` when not provided
+    `=destroy`(a)
+    a.len = b.len
+    a.cap = b.cap
+    a.data = b.data
 
-    proc `[]`*[T](x: myseq[T]; i: Natural): lent T =
-      assert i < x.len
-      x.data[i]
 
-    proc `[]=`*[T](x: var myseq[T]; i: Natural; y: sink T) =
-      assert i < x.len
-      x.data[i] = y
+Accessors
+=========
+
+.. code-block::nim
+   :number-lines:
+
+  proc add*[T](x: var myseq[T]; y: sink T) =
+    if x.len >= x.cap: resize(x)
+    x.data[x.len] = y
+    inc x.len
+
+  proc `[]`*[T](x: myseq[T]; i: Natural): lent T =
+    assert i < x.len
+    x.data[i]
+
+  proc `[]=`*[T](x: var myseq[T]; i: Natural; y: sink T) =
+    assert i < x.len
+    x.data[i] = y
 
 
 
@@ -655,6 +649,29 @@ Benchmark: Throughput
   manual (withRc)                   6.244            379.074MiB
   object pooling                    **2.4s**         251.504MiB
 ==============================      ==============   =============
+
+
+Problem: Cycles
+===============
+
+::
+  cycles.markdeep
+
+
+Benchmark: Cycle collection
+===========================
+
+
+==============================      ==============   =============
+  Memory management strategy        Time             Peak Memory
+==============================      ==============   =============
+  mark&sweep GC                     0.76s            347.098MiB
+  deferred refcounting GC           0.79s            247.754MiB
+  Boehm GC                          0.78s            N/A
+  ARC                               0.38s            179.188MiB
+  ORC                               0.54s            188.445MiB
+==============================      ==============   =============
+
 
 
 ..

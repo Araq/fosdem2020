@@ -283,6 +283,89 @@ Getters: Lending a value (4)
     result = t.slots[h] # "borrow", no copy, no move.
 
 
+Custom containers
+=================
+
+- Custom destructors, assignments and move optimizations.
+- Files/sockets etc can be closed automatically. (See C++, Rust.)
+- Enable composition between specialized memory management solutions.
+
+
+
+Destructors
+===========
+
+.. code-block::nim
+   :number-lines:
+
+  type
+    myseq*[T] = object
+      len, cap: int
+      data: ptr UncheckedArray[T]
+
+  proc `=destroy`*[T](x: var myseq[T]) =
+    if x.data != nil:
+      for i in 0..<x.len: `=destroy`(x[i])
+      dealloc(x.data)
+      x.data = nil
+
+
+Assignment operator
+===================
+
+.. code-block::nim
+   :number-lines:
+
+  proc `=`*[T](a: var myseq[T]; b: myseq[T]) =
+    # do nothing for self-assignments:
+    if a.data == b.data: return
+    `=destroy`(a)
+    a.len = b.len
+    a.cap = b.cap
+    if b.data != nil:
+      a.data = cast[type(a.data)](alloc(a.cap * sizeof(T)))
+      for i in 0..<a.len:
+        a.data[i] = b.data[i]
+
+
+Move operator
+=============
+
+.. code-block::nim
+   :number-lines:
+
+  proc `=sink`*[T](a: var myseq[T]; b: myseq[T]) =
+    # move assignment, optional.
+    # Compiler is using `=destroy` and `copyMem` when not provided
+    `=destroy`(a)
+    a.len = b.len
+    a.cap = b.cap
+    a.data = b.data
+
+
+Accessors
+=========
+
+.. code-block::nim
+   :number-lines:
+
+  proc add*[T](x: var myseq[T]; y: sink T) =
+    if x.len >= x.cap: resize(x)
+    x.data[x.len] = y # sink parameter: no copy
+    inc x.len
+
+  proc `[]`*[T](x: myseq[T]; i: Natural): lent T =
+    assert i < x.len
+    result = x.data[i] # lent result: no copy
+
+  proc `[]`*[T](x: var myseq[T]; i: Natural): var T =
+    assert i < x.len
+    result = x.data[i] # var result: no copy
+
+  proc `[]=`*[T](x: var myseq[T]; i: Natural; y: sink T) =
+    assert i < x.len
+    x.data[i] = y
+
 
 Reference counting
 ==================
@@ -292,6 +375,30 @@ Reference counting
 - "Copy reference" ~ ``incRC(src); decRC(dest); dest = src``
 - "Move reference" ~ ``dest = src``
 - Led to the development of the ``--gc:arc`` mode.
+
+
+ARC
+=====
+
+.. code-block::nim
+   :number-lines:
+
+  proc `=destroy`*[T](x: var ref T) =
+    if x != nil:
+      if x.rc == 0:
+        dealloc(x)
+      else:
+        dec x.rc
+    x = nil
+
+  proc `=`*[T](a: var ref T; b: ref T) =
+    if b != nil: inc b.rc
+    `=destroy`(a)
+    a = b
+
+  proc `=sink`*[T](a: var myseq[T]; b: myseq[T]) =
+    `=destroy`(a)
+    a = b
 
 
 ARC
@@ -444,90 +551,6 @@ Benchmark: Latency
 
 
 
-Custom containers
-=================
-
-- Custom destructors, assignments and move optimizations.
-- Files/sockets etc can be closed automatically. (See C++, Rust.)
-- Enable composition between specialized memory management solutions.
-
-
-
-Destructors
-===========
-
-.. code-block::nim
-   :number-lines:
-
-  type
-    myseq*[T] = object
-      len, cap: int
-      data: ptr UncheckedArray[T]
-
-  proc `=destroy`*[T](x: var myseq[T]) =
-    if x.data != nil:
-      for i in 0..<x.len: `=destroy`(x[i])
-      dealloc(x.data)
-      x.data = nil
-
-
-Assignment operator
-===================
-
-.. code-block::nim
-   :number-lines:
-
-  proc `=`*[T](a: var myseq[T]; b: myseq[T]) =
-    # do nothing for self-assignments:
-    if a.data == b.data: return
-    `=destroy`(a)
-    a.len = b.len
-    a.cap = b.cap
-    if b.data != nil:
-      a.data = cast[type(a.data)](alloc(a.cap * sizeof(T)))
-      for i in 0..<a.len:
-        a.data[i] = b.data[i]
-
-
-Move operator
-=============
-
-.. code-block::nim
-   :number-lines:
-
-  proc `=sink`*[T](a: var myseq[T]; b: myseq[T]) =
-    # move assignment, optional.
-    # Compiler is using `=destroy` and `copyMem` when not provided
-    `=destroy`(a)
-    a.len = b.len
-    a.cap = b.cap
-    a.data = b.data
-
-
-Accessors
-=========
-
-.. code-block::nim
-   :number-lines:
-
-  proc add*[T](x: var myseq[T]; y: sink T) =
-    if x.len >= x.cap: resize(x)
-    x.data[x.len] = y # sink parameter: no copy
-    inc x.len
-
-  proc `[]`*[T](x: myseq[T]; i: Natural): lent T =
-    assert i < x.len
-    result = x.data[i] # lent result: no copy
-
-  proc `[]`*[T](x: var myseq[T]; i: Natural): var T =
-    assert i < x.len
-    result = x.data[i] # var result: no copy
-
-  proc `[]=`*[T](x: var myseq[T]; i: Natural; y: sink T) =
-    assert i < x.len
-    x.data[i] = y
-
-
 
 Object pooling
 ==============
@@ -672,6 +695,23 @@ Problem: Cycles (2)
 sum(RC) == 3
 
 count(edges) == 3
+
+
+ORC
+============
+
+.. code-block::nim
+   :number-lines:
+
+  proc `=destroy`*[T](x: var ref T) =
+    if x != nil:
+      if x.rc == 0:
+        dealloc(x)
+      else:
+        dec x.rc
+        cycleCandidate(x)
+    x = nil
+
 
 
 Benchmark: Cycle collection

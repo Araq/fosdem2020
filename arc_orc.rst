@@ -194,42 +194,42 @@ Sink parameters (4)
 
 - Solution: Move code around.
 
+..
+  Sink: More examples
+  ===================
 
-Sink: More examples
-===================
+  - A ``sink`` parameter is an optimization.
+  - If you get it wrong, only performance is affected.
 
-- A ``sink`` parameter is an optimization.
-- If you get it wrong, only performance is affected.
+  .. code-block::nim
+    :number-lines:
 
-.. code-block::nim
-   :number-lines:
+    func `[]=`[K, V](t: var Table[K, V]; k: K; v: V)
 
-  func `[]=`[K, V](t: var Table[K, V]; k: K; v: V)
+    func `==`[T](a, b: T): bool
 
-  func `==`[T](a, b: T): bool
+    func `+`[T](a, b: T): T
 
-  func `+`[T](a, b: T): T
-
-  func add[T](s: var seq[T]; v: T)
+    func add[T](s: var seq[T]; v: T)
 
 
 
-Sink: More examples (2)
-=======================
+  Sink: More examples (2)
+  =======================
 
-- A ``sink`` parameter is an optimization.
-- If you get it wrong, only performance is affected.
+  - A ``sink`` parameter is an optimization.
+  - If you get it wrong, only performance is affected.
 
-.. code-block::nim
-   :number-lines:
+  .. code-block::nim
+    :number-lines:
 
-  func `[]=`[K, V](t: var Table[K, V]; k: ***sink*** K; v: ***sink*** V)
+    func `[]=`[K, V](t: var Table[K, V]; k: ***sink*** K; v: ***sink*** V)
 
-  func `==`[T](a, b: T): bool
+    func `==`[T](a, b: T): bool
 
-  func `+`[T](a, b: T): T
+    func `+`[T](a, b: T): T
 
-  func add[T](s: var seq[T]; v: ***sink*** T)
+    func add[T](s: var seq[T]; v: ***sink*** T)
 
 
 
@@ -512,12 +512,16 @@ Accessors
 
   proc add*[T](x: var myseq[T]; y: sink T) =
     if x.len >= x.cap: resize(x)
-    x.data[x.len] = y
+    x.data[x.len] = y # sink parameter: no copy
     inc x.len
 
   proc `[]`*[T](x: myseq[T]; i: Natural): lent T =
     assert i < x.len
-    x.data[i]
+    result = x.data[i] # lent result: no copy
+
+  proc `[]`*[T](x: var myseq[T]; i: Natural): var T =
+    assert i < x.len
+    result = x.data[i] # var result: no copy
 
   proc `[]=`*[T](x: var myseq[T]; i: Natural; y: sink T) =
     assert i < x.len
@@ -658,6 +662,18 @@ Problem: Cycles
   cycles.markdeep
 
 
+Problem: Cycles (2)
+===================
+
+::
+  cycles.markdeep
+
+
+sum(RC) == 3
+
+count(edges) == 3
+
+
 Benchmark: Cycle collection
 ===========================
 
@@ -673,6 +689,71 @@ Benchmark: Cycle collection
 ==============================      ==============   =============
 
 
+
+Acyclic pragma
+==============
+
+.. code-block::nim
+   :number-lines:
+
+  type
+    LinkedList* {.acyclic.} = ref object
+      next: LinkedList
+      prev: LinkedList
+      data: string
+
+
+Cursor pragma
+=============
+
+.. code-block::nim
+   :number-lines:
+
+  type
+    LinkedList* {.acyclic.} = ref object
+      next: LinkedList
+      prev {.cursor.}: LinkedList
+      data: string
+
+
+Cursor pragma (2)
+=================
+
+.. code-block::nim
+   :number-lines:
+
+  func contains(head: LinkedList; value: string): bool =
+    var it {.cursor.} = head
+    while it != nil:
+      if it.data == value: return true
+      it = it.next
+    return false
+
+
+Summary
+=======
+
+- Start by compiling your program with ``--gc:orc``.
+
+
+Summary
+=======
+
+- Start by compiling your program with ``--gc:orc``.
+- Optimize your code via careful annotations:
+
+  - sink parameters
+  - lent return types
+  - .acyclic annotation
+  - .cursor annotation (dangerous)
+
+
+Nim 1.4
+=======
+
+1. **Declarative** memory management by describing the real topology.
+2. Better interoperability with manual memory management.
+3. Offers a shared heap via ``--threads:on``.
 
 ..
   - Channel.
@@ -705,33 +786,6 @@ Benchmark: Cycle collection
 
 
 
-Summary
-=======
 
-- Move semantics mostly work under the hood.
-- ``sink`` and ``lent`` annotations are optional.
-- Lead to incredible speedups and algorithmic improvements.
-- Make Nim faster and "deterministic".
-- New strategy improves:
-
-  - throughput
-  - latency
-  - memory consumption
-  - threading
-  - ease of programming
-  - flexibility / composition
-
-
-
-Happy hacking!
-==============
-
-Source code available under https://github.com/araq/fosdem2020.
-
-============       ================================================
-Website            https://nim-lang.org
-Forum              https://forum.nim-lang.org
-Github             https://github.com/nim-lang/Nim
-IRC                irc.freenode.net/nim
-============       ================================================
-
+Questions?
+==========

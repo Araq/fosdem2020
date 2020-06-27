@@ -2,7 +2,7 @@
 import strutils, os, re
 
 proc main(file: string) =
-  discard execShellCmd("nim rst2html $1.rst" % file)
+  discard execShellCmd("nim rst2html --outdir:. $1.rst" % file)
 
   const
     patternA = "<span class\\=\"Operator\">***</span>" &

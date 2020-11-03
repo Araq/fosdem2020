@@ -43,3 +43,4 @@ proc main(file: string) =
 
 for x in os.walkFiles("*.rst"):
   main(x.splitFile.name)
+echo "success"

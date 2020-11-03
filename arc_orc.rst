@@ -396,7 +396,7 @@ ARC
     `=destroy`(a)
     a = b
 
-  proc `=sink`*[T](a: var myseq[T]; b: myseq[T]) =
+  proc `=sink`*[T](a: var ref T; b: ref T) =
     `=destroy`(a)
     a = b
 
@@ -689,7 +689,7 @@ Problem: Cycles (2)
 ===================
 
 ::
-  cycles.markdeep
+  cycles2.markdeep
 
 
 sum(RC) == 3
@@ -737,10 +737,8 @@ Acyclic pragma
    :number-lines:
 
   type
-    LinkedList* {.acyclic.} = ref object
-      next: LinkedList
-      prev: LinkedList
-      data: string
+    Node {.acyclic.} = ref object
+      le, ri: Node
 
 
 Cursor pragma

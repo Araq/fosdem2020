@@ -30,7 +30,6 @@ proc main =
     for i in 1..iterations:
       var tmp = makeTree(depth)
       check += checkTree(tmp)
-      `=destroy`(tmp)
 
     echo iterations, "\t trees of depth ", depth, "\t check:", check
     iterations = iterations div 4
